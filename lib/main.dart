@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_qiblah_example/loading_indicator.dart';
 import 'package:flutter_qiblah_example/qiblah_compass.dart';
@@ -19,33 +20,38 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Color(0xff0c7b93),
-        primaryColorLight: Color(0xff00a8cc),
-        primaryColorDark: Color(0xff27496d),
-        accentColor: Color(0xffecce6d),
-      ),
-      darkTheme: ThemeData.dark().copyWith(accentColor: Color(0xffecce6d)),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: FutureBuilder(
-          future: _deviceSupport,
-          builder: (_, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return LoadingIndicator();
-            if (snapshot.hasError)
-              return Center(
-                child: Text("Error: ${snapshot.error.toString()}"),
-              );
+      title: 'القبلة',
+     
+/*
+      supportedLocales: [
+        const Locale('ar'),
+      ],
+      // These delegates make sure that the localization data for the proper language is loaded
+      localizationsDelegates: [
+        // THIS CLASS WILL BE ADDED LATER
+        // Built-in localization of basic text for Material widgets
+        GlobalMaterialLocalizations.delegate,
+        // Built-in localization for text direction LTR/RTL
+        GlobalWidgetsLocalizations.delegate,
+      ],
+*/
+      home: FutureBuilder(
+        future: _deviceSupport,
+        builder: (_, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return LoadingIndicator();
+          if (snapshot.hasError)
+            return Center(
+              child: Text("Error: ${snapshot.error.toString()}"),
+            );
 
-            if (snapshot.data)
-              return QiblahCompass();
+          if (snapshot.data)
+            return QiblahCompass();
 
-          },
-        ),
-      ),
+          return null;
+
+        },
+      )
     );
   }
 }
