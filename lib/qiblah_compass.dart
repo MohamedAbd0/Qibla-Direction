@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
-import 'package:flutter_qiblah_example/alert.dart';
 import 'package:flutter_qiblah_example/loading_indicator.dart';
 import 'package:flutter_qiblah_example/location_error_widget.dart';
 import 'package:geolocator/geolocator.dart';
@@ -58,15 +57,43 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
               Text(
                 'قم بتدوير هاتفك لتحسين دقة البوصلة بالحركة التالية',
                 textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w400,fontSize: 18),
+
               ),
-              Transform.translate(
-                  child: Icon(Icons.my_location), offset: Offset(0.97, .22)),
+              
+              Image.asset("assets/set_compass.png")
             ],
           ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
+
+
         );
       },
     );
   }
+  Future<void> _alertLocation(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'تم تحديث الموقع الحالي',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w400,fontSize: 18),
+
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
+
+
+        );
+      },
+    );
+  }
+
   _vibration() async {
     if (await Vibration.hasVibrator()) {
       Vibration.vibrate();
@@ -79,18 +106,14 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
       appBar: AppBar(
         title: const Text(
           'القبلة',
-          style: TextStyle(
-            color: Color.fromRGBO(78, 161, 181, 1),
-            fontSize: 30,
-          ),
+          style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w200, color: Color.fromRGBO(78, 161, 181, 1),),
         ),
         backgroundColor: Color.fromRGBO(251, 252, 252, 1),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: Image.asset('assets/compassIcon.png'),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AlertScreen())),
+            onPressed: () => _alert(context)
           )
         ],
       ),
@@ -135,10 +158,19 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
                                 child: Container(
                                   child: Column(
                                     children: <Widget>[
-                                      Text("القبلة"),
-                                      Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
+                                      SizedBox(height: MediaQuery.of(context).size.height * .05,),
+                                      Text("القبلة", style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w200, fontSize: 25),),
+                                      Text("${qiblahDirection.offset.toStringAsFixed(0)}°", style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w400, fontSize: 50),),
 
-                                      Text(_currentAddress != null ? _currentAddress : "")
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(_currentAddress != null ? _currentAddress : "", style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w300, fontSize: 20),),
+                                          SizedBox(width: 5,),
+                                          Image.asset("assets/pin_.png"),
+
+                                        ],
+                                      )
                                       //  Text(position.),
                                     ],
                                   ),
@@ -148,7 +180,11 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
                               child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.green
+                                  color: Color(0xFF00ff33).withOpacity(.2),
+                                  border: Border.all(
+                                    width: 7,
+                                    color: Colors.green
+                                  )
                                 ),
                               ),
 
@@ -178,9 +214,10 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       Image.asset(
-                                        'assets/kabah.png',
+                                        (qiblahDirection.direction.round() ==
+                                            qiblahDirection.offset.round()) ? 'assets/kaaba1.png' : 'assets/kabah.png',
                                         fit: BoxFit.contain,
-                                        height: MediaQuery.of(context).size.width * .1,
+                                        height: MediaQuery.of(context).size.width * .15,
                                         alignment: Alignment.center,
                                       ),
 
@@ -209,7 +246,6 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 child: Image.asset('assets/mosque.png',
-                                    height: MediaQuery.of(context).size.height * .23,
                                     width: MediaQuery.of(context).size.width,
                                     fit: BoxFit.fitHeight
                                   // height: 200,
@@ -257,7 +293,10 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
           Icons.my_location,
           color: Color.fromRGBO(78, 161, 181, 1),
         ),
-        onPressed: _getCurrentLocation,
+        onPressed: (){
+          _alertLocation(context);
+          _getCurrentLocation();
+        },
       ),
     );
   }
@@ -283,7 +322,6 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
       setState(() {
         _currentPosition = position;
       });
-
       _getAddressFromLatLng();
     }).catchError((e) {
       print(e);
@@ -294,7 +332,7 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
     print("dddddddddddddddddddddddddddddddddddd");
     try {
       List<Placemark> p = await geolocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
+          _currentPosition.latitude, _currentPosition.longitude,localeIdentifier:'ar');
 
       Placemark place = p[0];
 
