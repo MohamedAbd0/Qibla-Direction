@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
-import 'package:flutter_qiblah_example/loading_indicator.dart';
-import 'package:flutter_qiblah_example/location_error_widget.dart';
+import 'package:flutter_qiblah_example/qiblah/loading_indicator.dart';
+import 'package:flutter_qiblah_example/qiblah/location_error_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:vibration/vibration.dart';
 

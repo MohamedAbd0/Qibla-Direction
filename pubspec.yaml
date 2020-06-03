@@ -13,6 +13,9 @@ dependencies:
   flutter_qiblah: ^1.0.2+1
   vibration: ^1.2.4
   fluttertoast: ^4.0.0
+  adhan_flutter: ^0.0.2
+  intl: ^0.16.0
+  hijri: ^1.0.0
 
 
 dev_dependencies:
