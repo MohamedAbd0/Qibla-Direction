@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hijri/umm_alqura_calendar.dart';
 
+import 'Prayer_Time_Setting.dart';
 import 'model/player-model.dart';
 
 class PrayerTime extends StatefulWidget {
@@ -125,6 +126,7 @@ class _PrayerTimeState extends State<PrayerTime> {
           centerTitle: true,
           actions: <Widget>[
            IconButton(
+             onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> PrayerTimeSetting())),
              icon: Icon(Icons.settings,color: appColor,),
            )
           ],

@@ -15,7 +15,13 @@ dependencies:
   fluttertoast: ^4.0.0
   adhan_flutter: ^0.0.2
   intl: ^0.16.0
-  hijri: ^1.0.0
+  hijri: 1.0.0
+  path_provider: ^1.6.1
+  syncfusion_flutter_calendar: ^18.1.52-beta
+  syncfusion_flutter_datepicker: ^18.1.52-beta
+  location: ^2.5.3
+
+
 
 
 dev_dependencies:

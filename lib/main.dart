@@ -22,6 +22,22 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'القبلة',
+
+//        localizationsDelegates: [
+//          GlobalMaterialLocalizations.delegate,
+//          GlobalWidgetsLocalizations.delegate,
+//        ],
+//        supportedLocales: [
+//          const Locale('ar' , 'SA'),
+//        ],
+//        debugShowCheckedModeBanner: false,
+
+        theme: new ThemeData(
+          primaryColor: Colors.indigo,
+          accentColor: Colors.pinkAccent,
+          brightness: Brightness.light,
+        ),
+
 /*
 
       supportedLocales: [
@@ -37,8 +53,7 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
 */
-home: PrayerTime(),
-     /* home: FutureBuilder(
+      home: FutureBuilder(
         future: _deviceSupport,
         builder: (_, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
@@ -54,7 +69,7 @@ home: PrayerTime(),
           return null;
 
         },
-      )*/
+      )
     );
   }
 }
