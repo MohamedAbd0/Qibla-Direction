@@ -33,6 +33,7 @@ class LocationErrorWidget extends StatelessWidget {
         _serviceEnabled = await location.requestService();
         print(_serviceEnabled);
         if(_serviceEnabled){
+
           Navigator.push(context,
           MaterialPageRoute(builder: (context)=>QiblahCompass()));
         }

@@ -139,11 +139,14 @@ class _QiblahCompassState extends State<QiblahCompass>
         child: StreamBuilder(
           stream: stream,
           builder: (context, AsyncSnapshot<LocationStatus> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return LoadingIndicator();
-            if (snapshot.data.enabled == true) {
+            if  (snapshot.connectionState == ConnectionState.waiting)
+             {
+               print('loader 1');
+               return LoadingIndicator();
 
+            }
 
+             if(snapshot.data.enabled == true ) {
 
               switch (snapshot.data.status) {
                 case GeolocationStatus.granted:
@@ -151,7 +154,8 @@ class _QiblahCompassState extends State<QiblahCompass>
                     stream: FlutterQiblah.qiblahStream,
                     builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting)
-                        return LoadingIndicator();
+                       { print('loader 2');
+                      return LoadingIndicator();}
 
                       final qiblahDirection = snapshot.data;
 //        print(((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1));
@@ -203,6 +207,7 @@ class _QiblahCompassState extends State<QiblahCompass>
                                       ),
 
                                       Row(
+
                                         mainAxisSize: MainAxisSize.max,
                                         children: <Widget>[
                                           Text(
@@ -215,7 +220,7 @@ class _QiblahCompassState extends State<QiblahCompass>
                                                 fontSize: 15),
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Image.asset("assets/pin_.png"),
                                         ],
@@ -351,7 +356,7 @@ class _QiblahCompassState extends State<QiblahCompass>
         stream: stream,
         builder: (context, AsyncSnapshot<LocationStatus> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
-            return LoadingIndicator();
+            return SizedBox();
           if (snapshot.data.enabled == true) {
                 return  FloatingActionButton(
                   backgroundColor: Colors.white,
@@ -384,6 +389,7 @@ class _QiblahCompassState extends State<QiblahCompass>
       _locationStreamController.sink.add(s);
     } else
       _locationStreamController.sink.add(locationStatus);
+
   }
 
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
