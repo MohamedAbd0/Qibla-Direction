@@ -191,7 +191,7 @@ class _PrayerTimeState extends State<PrayerTime> {
           centerTitle: true,
           actions: <Widget>[
            IconButton(
-             onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> PrayerTimeSetting())),
+            // onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> PrayerTimeSetting())),
              icon: Icon(Icons.settings,color: appColor,),
            )
           ],
