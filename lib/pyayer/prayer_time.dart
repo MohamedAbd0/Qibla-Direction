@@ -267,9 +267,9 @@ class _PrayerTimeState extends State<PrayerTime> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
 
-                                      itemTimer("ساعة",hourNum.toString()),
-                                      itemTimer("دقيقة",minNum.toString()),
-                                      itemTimer("ثانية",secNum.toString()),
+                                      itemTimer("ساعة",hourNum.toString().length == 1? '0'+hourNum.toString():hourNum.toString()),
+                                      itemTimer("دقيقة",minNum.toString().length == 1 ? '0'+minNum.toString() :minNum.toString()),
+                                      itemTimer("ثانية",secNum.toString().length ==1 ? '0'+secNum.toString():secNum.toString()),
 
                                       Container(
                                         padding: EdgeInsets.only(top: 20,left: 5),
