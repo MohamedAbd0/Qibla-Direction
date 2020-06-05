@@ -61,6 +61,42 @@ class _PrayerTimeState extends State<PrayerTime> {
     }
   }
 
+  Future<void> _alertLocation(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.8),
+          child: AlertDialog(
+
+            content:Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                InkWell(
+                  child: Image.asset('assets/cancel.png',width: 15,),
+                  onTap: ()=>Navigator.pop(context),
+                ),
+                Text(
+                  'تم تحديث موقعك الحالي',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'Sukar', fontWeight: FontWeight.w400, color: Color(0xFF1E824C)),
+                ),
+                Image.asset('assets/success.png' ,width: 20,),
+
+              ],
+            ),
+
+
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -467,10 +503,7 @@ class _PrayerTimeState extends State<PrayerTime> {
             Icons.my_location,
             color: Color.fromRGBO(78, 161, 181, 1),
           ),
-          onPressed: (){
-           // _alertLocation(context);
-            _getCurrentLocation();
-          },
+          onPressed: ()=> _alertLocation(context)
         ),
 
       ),
