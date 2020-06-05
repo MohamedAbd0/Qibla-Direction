@@ -1,6 +1,58 @@
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qiblah_example/pyayer/widgets/custom_widgets.dart';
 
-class PrayerTimeSetting extends StatelessWidget {
+class PrayerTimeSetting extends StatefulWidget {
+  @override
+  _PrayerTimeSettingState createState() => _PrayerTimeSettingState();
+}
+
+class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
+  String dropdownValue = 'One';
+  bool showSinglePray = false;
+  bool chosen1 = true;
+  bool chosen2 = false;
+  bool isSwitchedBackGround = false;
+
+  bool isSwitchedAllBefore = false;
+  bool isSwitchedAllAdhan = false;
+  bool isSwitchedAllAfter = false;
+
+  bool isSwitchedFajrBefore = false;
+  bool isSwitchedFajrAdhan = false;
+  bool isSwitchedFajrAfter = false;
+
+  bool isSwitchedDhohrBefore = false;
+  bool isSwitchedDhohrAdhan = false;
+  bool isSwitchedDhohrAfter = false;
+
+  bool isSwitchedAsrBefore = false;
+  bool isSwitchedAsrAdhan = false;
+  bool isSwitchedAsrAfter = false;
+
+  bool isSwitchedMaghribBefore = false;
+  bool isSwitchedMaghribAdhan = false;
+  bool isSwitchedMaghribAfter = false;
+
+  bool isSwitchedIshaBefore = false;
+  bool isSwitchedIshaAdhan = false;
+  bool isSwitchedIshaAfter = false;
+
+  void add (val) {
+    setState(() {
+      val ++;
+    });
+  }
+
+  void remove(val){
+    if (val > 0){
+      setState(() {
+        val --;
+      });
+    }}
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +76,7 @@ class PrayerTimeSetting extends StatelessWidget {
             Column(
               children: <Widget>[
                 CustomTextField(
+                  readOnly: false,
                   icon: Icons.location_on,
                   title: "المدينة",
                   hint: "اختر المدينة",
@@ -32,13 +85,33 @@ class PrayerTimeSetting extends StatelessWidget {
                   height: 10,
                 ),
                 CustomTextField(
-                  title: "طريقة الحساب",
-                  hint: " رابطة العالم الاسلامي",
+                  readOnly: true,
+                  hint: dropdownValue,
+                  title: 'طريقة الحساب',
+                  prefixWidget: DropdownButton<String>(
+//                  value: dropdownValue
+                    underline: Container(
+                      color: Colors.white,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>['One', 'Two', 'Free', 'Four']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomTextField(
+                  readOnly: false,
                   title: "المذهب",
                   hint: "اختر المذهب ",
                 ),
@@ -46,6 +119,7 @@ class PrayerTimeSetting extends StatelessWidget {
                   height: 10,
                 ),
                 CustomTextField(
+                  readOnly: false,
                   title: "صوت المؤذن",
                   hint: "اختر المؤذن",
                 ),
@@ -57,7 +131,6 @@ class PrayerTimeSetting extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Switch(value: false, onChanged: (_) {}),
                 Text(
                   'العمل في الخلفية',
                   style: TextStyle(
@@ -65,7 +138,17 @@ class PrayerTimeSetting extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w200,
                   ),
-                )
+                ),
+                Switch(
+                  value: isSwitchedBackGround,
+                  onChanged: (value){
+                    setState(() {
+                      isSwitchedBackGround=value;
+                    });
+                  },
+                  activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                  activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                ),
               ],
             ),
             const SizedBox(
@@ -79,81 +162,262 @@ class PrayerTimeSetting extends StatelessWidget {
                 fontWeight: FontWeight.w900,
               ),
             ),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * .45 ,
-                  child: FlatButton(onPressed: (){
+            Container(
+              width: MediaQuery.of(context).size.width * .9,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CustomButton(
+                    title: 'اعدادات لكل الصلوات',
+                    onPressed: () {
+                      setState(() {
+                        showSinglePray = false;
+                        chosen1 = true;
+                        chosen2 = false;
+                      });
+                    },
+                    chosenButton: chosen1,
 
-                  }, child: Text('اعدادات لكل الصلوات')),
-                ),
-                Container(width: MediaQuery.of(context).size.width * .45 ,
-               child: FlatButton(
-                   onPressed: (){},
-                   child: Text('اعدادات لكل ات')),)
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  final String title;
-  final String hint;
-  final IconData icon;
-  CustomTextField(
-      {@required this.hint, @required this.icon, @required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * (.3 / 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontFamily: 'Sukar',
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
+                  ),
+                  CustomButton(
+                    title: 'اعدادات لكل صلاة علي حده',
+                    onPressed: () {
+                      setState(() {
+                        showSinglePray = true;
+                        chosen2 = true;
+                        chosen1 = false;
+                      });
+                    },
+                    chosenButton: chosen2,
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * (.3 / 4) - 20,
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                suffixIcon: Icon(
-                  icon,
-                  size: 18,
-                ),
-                hintText: hint,
-                hintStyle: TextStyle(
+            showSinglePray
+                ? Column(
+                    children: <Widget>[
+                      CustomPrayerAlarm(
+                        title: "الفجر",
+                        singlePrayer: true,
+                        switchButtonBefore: Switch(
+                          value: isSwitchedFajrBefore,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedFajrBefore=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedFajrAdhan,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedFajrAdhan=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAfter: Switch(
+value: isSwitchedFajrAfter,
+onChanged: (value){
+        setState(() {
+          isSwitchedFajrAfter=value;
+    });
+    },
+    activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+    activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+    ),
+                      ),
+                      CustomPrayerAlarm(
+                        title: "الظهر",
+                        singlePrayer: true,
+                        switchButtonBefore: Switch(
+                          value: isSwitchedDhohrBefore,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedDhohrBefore=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedDhohrAdhan,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedDhohrAdhan=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedDhohrAfter,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedDhohrAfter=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                      ),
+                      CustomPrayerAlarm(
+                        title: "العصر",
+                        singlePrayer: true,
+                        switchButtonBefore: Switch(
+                          value: isSwitchedAsrBefore,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedAsrBefore=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedAsrAdhan,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedAsrAdhan=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedAsrAfter,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedAsrAfter=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                      ),
+                      CustomPrayerAlarm(
+                        title: "المغرب",
+                        singlePrayer: true,
+                        switchButtonBefore: Switch(
+                          value: isSwitchedMaghribBefore,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedMaghribBefore=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedMaghribAdhan,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedMaghribAdhan=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedMaghribAfter,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedMaghribAfter=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                      ),
+                      CustomPrayerAlarm(
+                        title: "العشاء",
+                        singlePrayer: true,
+                        switchButtonBefore: Switch(
+                          value: isSwitchedIshaBefore,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedIshaBefore=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedIshaAdhan,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedIshaAdhan=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedIshaAfter,
+                          onChanged: (value){
+                            setState(() {
+                              isSwitchedIshaAfter=value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                        ),
+                      ),
+                    ],
+                  )
+                : CustomPrayerAlarm(
+                    singlePrayer: false,
+              switchButtonBefore: Switch(
+                value: isSwitchedAllBefore,
+                onChanged: (value){
+                  setState(() {
+                    isSwitchedAllBefore=value;
+                  });
+                },
+                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+              ),
+              switchButtonAdhan: Switch(
+                value: isSwitchedAllAdhan,
+                onChanged: (value){
+                  setState(() {
+                    isSwitchedAllAdhan=value;
+                  });
+                },
+                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+              ),
+              switchButtonAfter: Switch(
+                value: isSwitchedAllAfter,
+                onChanged: (value){
+                  setState(() {
+                    isSwitchedAllAfter=value;
+                  });
+                },
+                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
+                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+              ),
+            ),
+            RaisedButton(
+              elevation: 0,
+              shape: StadiumBorder(side: BorderSide(color:Color.fromRGBO(78, 161, 181, 1) )),
+              color: Colors.white,
+              onPressed: () {},
+              child: Text(
+                'تم',
+                style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Sukar',
                   fontWeight: FontWeight.w200,
+                  color: Color.fromRGBO(78, 161, 181, 1),
                 ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.black54)),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.black54)),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.black54)),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

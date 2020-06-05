@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_qiblah_example/home.dart';
+import 'package:flutter_qiblah_example/pyayer/Prayer_Time_Setting.dart';
 import 'package:flutter_qiblah_example/pyayer/prayer_time.dart';
 import 'package:flutter_qiblah_example/qiblah/loading_indicator.dart';
 import 'package:flutter_qiblah_example/qiblah/qiblah_compass.dart';
@@ -25,14 +26,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'القبلة',
 
-//        localizationsDelegates: [
-//          GlobalMaterialLocalizations.delegate,
-//          GlobalWidgetsLocalizations.delegate,
-//        ],
-//        supportedLocales: [
-//          const Locale('ar' , 'SA'),
-//        ],
-//        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('ar' , 'SA'),
+        ],
+        debugShowCheckedModeBanner: false,
 
         theme: new ThemeData(
           primaryColor: Colors.indigo,
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             );
 
           if (snapshot.data)
-            return PrayerTime();
+            return PrayerTimeSetting();
 
           return null;
 
