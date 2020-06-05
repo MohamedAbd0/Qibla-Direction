@@ -5,11 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_qiblah_example/home.dart';
+import 'package:flutter_qiblah_example/pyayer/prayer_time.dart';
 import 'package:flutter_qiblah_example/qiblah/loading_indicator.dart';
-import 'package:flutter_qiblah_example/prayer_time.dart';
 import 'package:flutter_qiblah_example/qiblah/qiblah_compass.dart';
 
-import 'Prayer_Time_Setting.dart';
 
 void main() => runApp(MyApp());
 
@@ -67,7 +66,7 @@ class _MyAppState extends State<MyApp> {
             );
 
           if (snapshot.data)
-            return PrayerTimeSetting();
+            return PrayerTime();
 
           return null;
 

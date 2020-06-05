@@ -17,6 +17,7 @@ dependencies:
   intl: ^0.16.0
   hijri: 1.0.0
   location: ^2.5.3
+  #  hijri_picker: ^1.0.0
 
 
 

@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qiblah_example/model/player-model.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hijri/umm_alqura_calendar.dart';
 
 import 'Prayer_Time_Setting.dart';
-import 'model/player-model.dart';
 
 class PrayerTime extends StatefulWidget {
   @override
@@ -15,12 +17,21 @@ class PrayerTime extends StatefulWidget {
 
 class _PrayerTimeState extends State<PrayerTime> {
 
+
+  Map<Prayer,DateTime> mapNext= Map<Prayer,DateTime>();
+
+
+
+
   PrayerModel _prayerModel = PrayerModel();
   Color appColor =Color.fromRGBO(78, 161, 181, 1);
   DateTime time ;
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
+  int hourNum;
+  int minNum;
+  int secNum;
 
   _getCurrentLocation() {
     geolocator
@@ -111,10 +122,28 @@ class _PrayerTimeState extends State<PrayerTime> {
     );
 
   }
+  
+  timerValue(){
+
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if(mapNext != null){
+        setState(() {
+          hourNum= mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inHours;
+          minNum = (mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inMinutes-(mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inHours * 60));
+          secNum = (mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inSeconds-(mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inMinutes * 60));
+
+        });
+      }
+    });
+
+
+    
+  }
 
   @override
   Widget build(BuildContext context) {
     print(_prayerModel.timeOfNext());
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -136,6 +165,19 @@ class _PrayerTimeState extends State<PrayerTime> {
             Center(child: Text('Waiting...')):
         Stack(
           children: <Widget>[
+            Positioned(
+
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset('assets/mosque.png',
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitHeight
+                  // height: 200,
+                  //  alignment: Alignment.center,
+                ),
+              ),
+            ),
 
             Container(
               padding: EdgeInsets.all(10),
@@ -149,7 +191,9 @@ class _PrayerTimeState extends State<PrayerTime> {
                         builder: (context, AsyncSnapshot<Prayer> snapshot) {
                           if (snapshot.hasData) {
                             final prayer = snapshot.data;
-                            return Text(
+                            return
+
+                              Text(
                               prayer == Prayer.FAJR?"الفجر"
                                   :prayer == Prayer.SUNRISE?"الشروق"
                                   :prayer == Prayer.DHUHR?"الظهر"
@@ -181,16 +225,15 @@ class _PrayerTimeState extends State<PrayerTime> {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  _prayerModel != null  ?
-                                  prayer == Prayer.FAJR && _prayerModel.fajr != null?
+                                  hourNum != null && minNum != null && secNum != null?
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
 
-                                      itemTimer("ساعة","05"),
-                                      itemTimer("دقيقة","25"),
-                                      itemTimer("ثانية","47"),
+                                      itemTimer("ساعة",hourNum.toString()),
+                                      itemTimer("دقيقة",minNum.toString()),
+                                      itemTimer("ثانية",secNum.toString()),
 
                                       Container(
                                         padding: EdgeInsets.only(top: 20,left: 5),
@@ -203,61 +246,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       ),
                                     ],
                                   )
-                                      :prayer == Prayer.SUNRISE && _prayerModel.sun != null?
-                                      SizedBox()
-                                      :prayer == Prayer.DHUHR && _prayerModel.dhor != null?
-                                  SizedBox()
-                                      :prayer == Prayer.ASR && _prayerModel.asr != null?
-                                      Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-
-                                      itemTimer("ساعة",_prayerModel.asr.difference(DateTime.now()).inHours.toString()),
-                                      itemTimer("دقيقة","25"),
-                                      itemTimer("ثانية","47"),
-
-                                      Container(
-                                        padding: EdgeInsets.only(top: 20,left: 5),
-                                        child:Text(
-                                          "بعد",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w900, color:Colors.grey,),
-
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                      :prayer == Prayer.MAGHRIB && _prayerModel.maghrib != null?
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-
-                                      itemTimer("ساعة",_prayerModel.isa.difference(DateTime.now()).inHours.toString()),
-                                      itemTimer("دقيقة",(_prayerModel.isa.difference(DateTime.now()).inMinutes-(_prayerModel.isa.difference(DateTime.now()).inHours * 60)).toString()),
-                                      itemTimer("ثانية",(_prayerModel.isa.difference(DateTime.now()).inSeconds-(_prayerModel.isa.difference(DateTime.now()).inMinutes * 60)).toString()),
-
-                                      Container(
-                                        padding: EdgeInsets.only(top: 20,left: 5),
-                                        child:Text(
-                                          "بعد",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w900, color:Colors.grey,),
-
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                      :prayer == Prayer.ISHA?
-                                  SizedBox()
-                                      :
-                                  SizedBox()
-
-
                                       :SizedBox()
-
-
                                 ],
                               ),
                             );
@@ -310,12 +299,24 @@ class _PrayerTimeState extends State<PrayerTime> {
                             child: ListTile(
                                 title: Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${ DateFormat.yMMMd().format(time)}\n${ DateFormat.EEEE().format(time)}",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w200, color:Colors.white),
+                                  child: Center(
+                                    child: Container(
+                                      //margin: EdgeInsets.only(left: 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${ DateFormat.yMMMd().format(time)}\n${ DateFormat.EEEE().format(time)}",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontFamily: 'Sukar' , fontWeight: FontWeight.w200, color:Colors.white),
+                                          ),
 
-
+                                          IconButton(
+                                            icon: Icon(Icons.date_range,color: Colors.white,),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 leading: IconButton(
@@ -456,19 +457,6 @@ class _PrayerTimeState extends State<PrayerTime> {
               ),
             ),
 
-            Positioned(
-
-              bottom: 0,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Image.asset('assets/mosque.png',
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitHeight
-                  // height: 200,
-                  //  alignment: Alignment.center,
-                ),
-              ),
-            ),
 
           ],
         ),
@@ -536,6 +524,64 @@ class _PrayerTimeState extends State<PrayerTime> {
     adhan.asr.then((p){
       _prayerModel.setAsr(p);
     });
+
+    adhan.nextPrayer().then((prayer){
+      print( "mapNext[prayer]");
+
+      print(prayer);
+
+      print( mapNext[prayer]);
+
+      if(mapNext[prayer] == null){
+        if(prayer == Prayer.FAJR){
+          adhan.fajr.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });
+          });
+          timerValue();
+
+        }else if(prayer == Prayer.SUNRISE){
+          adhan.sunrise.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });        });
+          timerValue();
+
+        }else if(prayer == Prayer.DHUHR){
+          adhan.dhuhr.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });        });
+          timerValue();
+
+        }else if(prayer == Prayer.ASR){
+          adhan.asr.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });        });
+          timerValue();
+
+        }else if(prayer == Prayer.MAGHRIB){
+          adhan.maghrib.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });        });
+          timerValue();
+
+        }else if(prayer == Prayer.ISHA){
+          adhan.isha.then((p){
+            setState(() {
+              mapNext[prayer]=p;
+            });
+          });
+          timerValue();
+
+        }
+      }
+
+    });
+
 
     return await adhan.nextPrayer();
   }
