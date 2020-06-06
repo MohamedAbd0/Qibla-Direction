@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
+import 'package:flutter_qiblah_example/pyayer/Prayer_Time_Setting.dart';
 import 'package:flutter_qiblah_example/qiblah/loading_indicator.dart';
 import 'package:flutter_qiblah_example/qiblah/location_error_widget.dart';
 import 'package:geolocator/geolocator.dart';
@@ -131,7 +132,8 @@ class _QiblahCompassState extends State<QiblahCompass>
         actions: <Widget>[
           IconButton(
               icon: Image.asset('assets/compassIcon.png'),
-              onPressed: () => _alert(context))
+              onPressed: () => _alert(context)),
+          IconButton(icon: Icon(Icons.settings,color: Color.fromRGBO(78, 161, 181, 1),), onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>PrayerTimeSetting())))
         ],
       ),
 

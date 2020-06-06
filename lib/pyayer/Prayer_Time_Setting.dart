@@ -13,6 +13,18 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
   bool chosen1 = true;
   bool chosen2 = false;
   bool isSwitchedBackGround = false;
+  int timerAfter = 0,
+      timerBefore = 0,
+      timerFajrAfter = 0,
+      timerFajrBefore = 0,
+      timerDhohrAfter = 0,
+      timerDhohrBefore = 0,
+      timerAsrAfter = 0,
+      timerAsrBefore = 0,
+      timerMaghribAfter = 0,
+      timerMaghribBefore = 0,
+      timerIshaAfter = 0,
+      timerIshaBefore = 0;
 
   bool isSwitchedAllBefore = false;
   bool isSwitchedAllAdhan = false;
@@ -37,21 +49,6 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
   bool isSwitchedIshaBefore = false;
   bool isSwitchedIshaAdhan = false;
   bool isSwitchedIshaAfter = false;
-
-  void add (val) {
-    setState(() {
-      val ++;
-    });
-  }
-
-  void remove(val){
-    if (val > 0){
-      setState(() {
-        val --;
-      });
-    }}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +99,9 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width*.5,
+                            child: Text(value)),
                       );
                     }).toList(),
                   ),
@@ -141,13 +140,13 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                 ),
                 Switch(
                   value: isSwitchedBackGround,
-                  onChanged: (value){
+                  onChanged: (value) {
                     setState(() {
-                      isSwitchedBackGround=value;
+                      isSwitchedBackGround = value;
                     });
                   },
-                  activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                  activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                  activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                  activeColor: Color.fromRGBO(78, 161, 181, 1),
                 ),
               ],
             ),
@@ -177,7 +176,6 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       });
                     },
                     chosenButton: chosen1,
-
                   ),
                   CustomButton(
                     title: 'اعدادات لكل صلاة علي حده',
@@ -199,211 +197,224 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       CustomPrayerAlarm(
                         title: "الفجر",
                         singlePrayer: true,
+                        timerAfter: timerFajrAfter,
+                        timerBefore: timerFajrBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedFajrBefore,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedFajrBefore=value;
+                              isSwitchedFajrBefore = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAdhan: Switch(
                           value: isSwitchedFajrAdhan,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedFajrAdhan=value;
+                              isSwitchedFajrAdhan = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAfter: Switch(
-value: isSwitchedFajrAfter,
-onChanged: (value){
-        setState(() {
-          isSwitchedFajrAfter=value;
-    });
-    },
-    activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-    activeColor: Color.fromRGBO(78, 161, 181, 1) ,
-    ),
+                          value: isSwitchedFajrAfter,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedFajrAfter = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
                       ),
                       CustomPrayerAlarm(
                         title: "الظهر",
+                        timerAfter: timerDhohrAfter,
+                        timerBefore: timerDhohrBefore,
                         singlePrayer: true,
                         switchButtonBefore: Switch(
                           value: isSwitchedDhohrBefore,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedDhohrBefore=value;
+                              isSwitchedDhohrBefore = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAdhan: Switch(
                           value: isSwitchedDhohrAdhan,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedDhohrAdhan=value;
+                              isSwitchedDhohrAdhan = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAfter: Switch(
                           value: isSwitchedDhohrAfter,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedDhohrAfter=value;
+                              isSwitchedDhohrAfter = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
                       CustomPrayerAlarm(
                         title: "العصر",
                         singlePrayer: true,
+                        timerAfter: timerAsrAfter,
+                        timerBefore: timerAsrBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedAsrBefore,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedAsrBefore=value;
+                              isSwitchedAsrBefore = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAdhan: Switch(
                           value: isSwitchedAsrAdhan,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedAsrAdhan=value;
+                              isSwitchedAsrAdhan = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAfter: Switch(
                           value: isSwitchedAsrAfter,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedAsrAfter=value;
+                              isSwitchedAsrAfter = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
                       CustomPrayerAlarm(
                         title: "المغرب",
                         singlePrayer: true,
+                        timerAfter: timerMaghribAfter,
+                        timerBefore: timerMaghribBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedMaghribBefore,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedMaghribBefore=value;
+                              isSwitchedMaghribBefore = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAdhan: Switch(
                           value: isSwitchedMaghribAdhan,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedMaghribAdhan=value;
+                              isSwitchedMaghribAdhan = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAfter: Switch(
                           value: isSwitchedMaghribAfter,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedMaghribAfter=value;
+                              isSwitchedMaghribAfter = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
                       CustomPrayerAlarm(
                         title: "العشاء",
                         singlePrayer: true,
+                        timerAfter: timerIshaAfter,
+                        timerBefore: timerIshaBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedIshaBefore,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedIshaBefore=value;
+                              isSwitchedIshaBefore = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAdhan: Switch(
                           value: isSwitchedIshaAdhan,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedIshaAdhan=value;
+                              isSwitchedIshaAdhan = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                         switchButtonAfter: Switch(
                           value: isSwitchedIshaAfter,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
-                              isSwitchedIshaAfter=value;
+                              isSwitchedIshaAfter = value;
                             });
                           },
-                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                          activeColor: Color.fromRGBO(78, 161, 181, 1) ,
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
                     ],
                   )
                 : CustomPrayerAlarm(
                     singlePrayer: false,
-              switchButtonBefore: Switch(
-                value: isSwitchedAllBefore,
-                onChanged: (value){
-                  setState(() {
-                    isSwitchedAllBefore=value;
-                  });
-                },
-                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
-              ),
-              switchButtonAdhan: Switch(
-                value: isSwitchedAllAdhan,
-                onChanged: (value){
-                  setState(() {
-                    isSwitchedAllAdhan=value;
-                  });
-                },
-                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
-              ),
-              switchButtonAfter: Switch(
-                value: isSwitchedAllAfter,
-                onChanged: (value){
-                  setState(() {
-                    isSwitchedAllAfter=value;
-                  });
-                },
-                activeTrackColor: Color.fromRGBO(78, 161, 181, 1) ,
-                activeColor: Color.fromRGBO(78, 161, 181, 1) ,
-              ),
-            ),
+                    timerAfter: timerAfter,
+                    timerBefore: timerBefore,
+                    switchButtonBefore: Switch(
+                      value: isSwitchedAllBefore,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitchedAllBefore = value;
+                        });
+                      },
+                      activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                      activeColor: Color.fromRGBO(78, 161, 181, 1),
+                    ),
+                    switchButtonAdhan: Switch(
+                      value: isSwitchedAllAdhan,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitchedAllAdhan = value;
+                        });
+                      },
+                      activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                      activeColor: Color.fromRGBO(78, 161, 181, 1),
+                    ),
+                    switchButtonAfter: Switch(
+                      value: isSwitchedAllAfter,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitchedAllAfter = value;
+                        });
+                      },
+                      activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                      activeColor: Color.fromRGBO(78, 161, 181, 1),
+                    ),
+                  ),
             RaisedButton(
               elevation: 0,
-              shape: StadiumBorder(side: BorderSide(color:Color.fromRGBO(78, 161, 181, 1) )),
+              shape: StadiumBorder(
+                  side: BorderSide(color: Color.fromRGBO(78, 161, 181, 1))),
               color: Colors.white,
               onPressed: () {},
               child: Text(

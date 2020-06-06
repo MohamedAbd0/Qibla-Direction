@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             );
 
           if (snapshot.data)
-            return PrayerTimeSetting();
+            return Home();
 
           return null;
 

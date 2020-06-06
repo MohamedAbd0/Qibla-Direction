@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * (.3 / 4),
+      height: MediaQuery.of(context).size.height * (.33 / 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -111,21 +111,23 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class CustomSettingAlarm extends StatelessWidget {
+class CustomSettingAlarm extends StatefulWidget {
   final String title;
-  final Function add;
-  final Function remove;
-  final int timer;
+  int timer;
   final bool timerRow;
   final Switch switchButtonSingle;
-  const CustomSettingAlarm(
+
+  CustomSettingAlarm(
       {@required this.title,
-      this.add,
-      this.remove,
       this.timer,
       this.timerRow,
       this.switchButtonSingle});
 
+  @override
+  _CustomSettingAlarmState createState() => _CustomSettingAlarmState();
+}
+
+class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -134,7 +136,7 @@ class CustomSettingAlarm extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            title,
+            widget.title,
             style: TextStyle(
               fontFamily: 'Sukar',
 //                      fontSize: 24,
@@ -143,7 +145,7 @@ class CustomSettingAlarm extends StatelessWidget {
             ),
           ),
         ),
-        timerRow == true
+        widget.timerRow == true
             ? Expanded(
                 flex: 3,
                 child: Row(
@@ -171,7 +173,10 @@ class CustomSettingAlarm extends StatelessWidget {
                                   alignment: Alignment.center,
                                   child: GestureDetector(
                                     onTap: () {
-                                      add;
+                                      setState(() {
+                                        widget.timer++;
+                                        print(widget.timer);
+                                      });
                                     },
                                     child: Icon(
                                       Icons.add,
@@ -181,7 +186,7 @@ class CustomSettingAlarm extends StatelessWidget {
                           Expanded(
                             flex: 3,
                             child: Text(
-                              '$timer',
+                              '${widget.timer}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Sukar',
@@ -202,6 +207,12 @@ class CustomSettingAlarm extends StatelessWidget {
                                       )),
                                   alignment: Alignment.center,
                                   child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        if (widget.timer > 0) widget.timer--;
+                                        print(widget.timer);
+                                      });
+                                    },
                                     child: Icon(
                                       Icons.remove,
                                       color: Colors.white,
@@ -228,7 +239,7 @@ class CustomSettingAlarm extends StatelessWidget {
                 flex: 3,
                 child: Container(),
               ),
-        Expanded(flex: 1, child: switchButtonSingle),
+        Expanded(flex: 1, child: widget.switchButtonSingle),
       ],
     );
   }
@@ -240,13 +251,17 @@ class CustomPrayerAlarm extends StatelessWidget {
   final Switch switchButtonBefore;
   final Switch switchButtonAdhan;
   final Switch switchButtonAfter;
+  final int timerBefore;
+  final int timerAfter;
 
-  const CustomPrayerAlarm({
+  CustomPrayerAlarm({
     this.singlePrayer,
     this.title,
     this.switchButtonBefore,
     this.switchButtonAdhan,
     this.switchButtonAfter,
+    this.timerBefore,
+    this.timerAfter,
   });
 
   @override
@@ -274,19 +289,18 @@ class CustomPrayerAlarm extends StatelessWidget {
                         children: <Widget>[
                           CustomSettingAlarm(
                             title: 'تنبيه قبل الآذان',
-                            timer: 25,
+                            timer: timerBefore,
                             timerRow: true,
                             switchButtonSingle: switchButtonBefore,
                           ),
                           CustomSettingAlarm(
                             title: 'تنبيه بالآذان',
-                            timer: 25,
                             timerRow: false,
                             switchButtonSingle: switchButtonAdhan,
                           ),
                           CustomSettingAlarm(
                             title: 'تنبيه بالإقامة.',
-                            timer: 25,
+                            timer: timerAfter,
                             timerRow: true,
                             switchButtonSingle: switchButtonAfter,
                           ),
@@ -305,19 +319,18 @@ class CustomPrayerAlarm extends StatelessWidget {
             children: <Widget>[
               CustomSettingAlarm(
                 title: 'تنبيه قبل الآذان',
-                timer: 25,
+                timer: timerAfter,
                 timerRow: true,
                 switchButtonSingle: switchButtonBefore,
               ),
               CustomSettingAlarm(
                 title: 'تنبيه بالآذان',
-                timer: 25,
                 timerRow: false,
                 switchButtonSingle: switchButtonAdhan,
               ),
               CustomSettingAlarm(
                 title: 'تنبيه بالإقامة.',
-                timer: 25,
+                timer: timerBefore,
                 timerRow: true,
                 switchButtonSingle: switchButtonAfter,
               ),
