@@ -1,75 +1,37 @@
-class PrayerModel{
-  DateTime _fajr;
-  DateTime _sun;
-  DateTime _dhor;
-  DateTime _asr;
-  DateTime _maghrib;
-  DateTime _isa;
-  String _next;
+class PrayerModel {
 
-  String get next{
-    return _next;
-  }
+  final String fajr;
+  final String sunrise;
+  final String dhuhr ;
+  final String asr;
+  final String sunset;
+  final String maghrib;
+  final String isha;
+  final String imsak;
+  final String midnight;
 
-  DateTime get fajr {
-    return _fajr;
-  }
-  DateTime get sun {
-    return _sun;
-  }
-  DateTime get dhor {
-    return _dhor;
-  }
-  DateTime get asr {
-    return _asr;
-  }
-  DateTime get maghrib {
-    return _maghrib;
-  } DateTime get isa {
-    return _isa;
-  }
 
-  void setNext(String next) {
-    _next = next;
-  }
-  void setFajr(DateTime time) {
-    _fajr = time;
-  }
+  PrayerModel({
+    this.fajr, this.sunrise, this.dhuhr, this.asr, this.sunset, this.maghrib, this.isha, this.imsak, this.midnight
+});
 
-  void setSun(DateTime time) {
-    this._fajr = time;
-  }
-  void setDhor(DateTime time) {
-    this._dhor = time;
-  }
-  void setAsr(DateTime time) {
-    this._asr = time;
-  }
-  void setMaghrib(DateTime time) {
-    this._maghrib = time;
-  }
-  void setIsa(DateTime time) {
-    this._isa = time;
-  }
 
-  DateTime timeOfNext(){
-    print("_next");
+  factory PrayerModel.fromJson(Map<String, dynamic> json) => _modelFromJson(json);
+}
 
-    print(_next);
+PrayerModel _modelFromJson(Map<String, dynamic> json) {
 
-    if(_next == "Prayer.SUNRISE")
-      return _sun;
-    else if (_next == "Prayer.FAJR")
-      return _fajr;
-    else if (_next == "Prayer.DHUHR")
-      return _dhor;
-    else if (_next == "Prayer.ASR")
-      return _asr;
-    else if (_next == "Prayer.MAGHRIB")
-      return _maghrib;
-    else if (_next == "Prayer.ISHA")
-      return _isa;
-    else return null;
-  }
 
+  return PrayerModel(
+    fajr: json["timings"]["Fajr"] as String,
+    sunrise: json["timings"]["Sunrise"] as String,
+    dhuhr: json["timings"]["Dhuhr"] as String,
+    asr: json["timings"]["Asr"] as String,
+    sunset: json["timings"]["Sunset"] as String,
+    maghrib: json["timings"]["Maghrib"] as String,
+    imsak: json["timings"]["Imsak"] as String,
+    isha: json["timings"]["Isha"] as String,
+    midnight: json["timings"]["Midnight"] as String,
+
+  );
 }

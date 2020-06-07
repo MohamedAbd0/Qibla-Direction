@@ -54,6 +54,22 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+//          onPressed: () => Navigator.of(context).pop(true),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.transparent,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            icon: Icon(
+              Icons.arrow_forward_ios,
+              color: Color.fromRGBO(78, 161, 181, 1),
+            ),
+          )
+        ],
         centerTitle: true,
         title: Text(
           'الاعدادات',
@@ -100,7 +116,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Container(
-                            width: MediaQuery.of(context).size.width*.5,
+                            width: MediaQuery.of(context).size.width * .5,
                             child: Text(value)),
                       );
                     }).toList(),
@@ -197,8 +213,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       CustomPrayerAlarm(
                         title: "الفجر",
                         singlePrayer: true,
-                        timerAfter: timerFajrAfter,
-                        timerBefore: timerFajrBefore,
+//                        timerAfter: timerFajrAfter,
+//                        timerBefore: timerFajrBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedFajrBefore,
                           onChanged: (value) {
@@ -232,8 +248,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       ),
                       CustomPrayerAlarm(
                         title: "الظهر",
-                        timerAfter: timerDhohrAfter,
-                        timerBefore: timerDhohrBefore,
+//                        timerAfter: timerDhohrAfter,
+//                        timerBefore: timerDhohrBefore,
                         singlePrayer: true,
                         switchButtonBefore: Switch(
                           value: isSwitchedDhohrBefore,
@@ -269,8 +285,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       CustomPrayerAlarm(
                         title: "العصر",
                         singlePrayer: true,
-                        timerAfter: timerAsrAfter,
-                        timerBefore: timerAsrBefore,
+//                        timerAfter: timerAsrAfter,
+//                        timerBefore: timerAsrBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedAsrBefore,
                           onChanged: (value) {
@@ -305,8 +321,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       CustomPrayerAlarm(
                         title: "المغرب",
                         singlePrayer: true,
-                        timerAfter: timerMaghribAfter,
-                        timerBefore: timerMaghribBefore,
+//                        timerAfter: timerMaghribAfter,
+//                        timerBefore: timerMaghribBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedMaghribBefore,
                           onChanged: (value) {
@@ -341,8 +357,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       CustomPrayerAlarm(
                         title: "العشاء",
                         singlePrayer: true,
-                        timerAfter: timerIshaAfter,
-                        timerBefore: timerIshaBefore,
+//                        timerAfter: timerIshaAfter,
+//                        timerBefore: timerIshaBefore,
                         switchButtonBefore: Switch(
                           value: isSwitchedIshaBefore,
                           onChanged: (value) {
@@ -378,8 +394,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   )
                 : CustomPrayerAlarm(
                     singlePrayer: false,
-                    timerAfter: timerAfter,
-                    timerBefore: timerBefore,
+//                    timerAfter: timerAfter,
+//                    timerBefore: timerBefore,
                     switchButtonBefore: Switch(
                       value: isSwitchedAllBefore,
                       onChanged: (value) {

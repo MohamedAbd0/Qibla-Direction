@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * (.33 / 4),
+      height: MediaQuery.of(context).size.height * (.3 / 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -111,6 +111,131 @@ class CustomButton extends StatelessWidget {
   }
 }
 
+//class CustomSettingAlarm extends StatelessWidget {
+//  final String title;
+//  final Function add;
+//  final Function remove;
+//  final int timer;
+//  final bool timerRow;
+//  final Switch switchButtonSingle;
+//  const CustomSettingAlarm(
+//      {@required this.title,
+//        this.add,
+//        this.remove,
+//        this.timer,
+//        this.timerRow,
+//        this.switchButtonSingle});
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Row(
+//      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//      children: <Widget>[
+//        Expanded(
+//          flex: 2,
+//          child: Text(
+//            title,
+//            style: TextStyle(
+//              fontFamily: 'Sukar',
+////                      fontSize: 24,
+//              fontWeight: FontWeight.w800,
+//              color: Colors.black,
+//            ),
+//          ),
+//        ),
+//        timerRow == true
+//            ? Expanded(
+//          flex: 3,
+//          child: Row(
+//            children: <Widget>[
+//              Container(
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.all(Radius.circular(20)),
+//                    border: Border.all(
+//                      color: Color.fromRGBO(78, 161, 181, 1),
+//                    )),
+//                width: MediaQuery.of(context).size.width * .3,
+//                height: 30,
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Expanded(
+//                        flex: 2,
+//                        child: Container(
+//                            decoration: BoxDecoration(
+//                                color: Color.fromRGBO(78, 161, 181, 1),
+//                                borderRadius: BorderRadius.only(
+//                                  bottomRight: Radius.circular(20),
+//                                  topRight: Radius.circular(20),
+//                                )),
+//                            alignment: Alignment.center,
+//                            child: GestureDetector(
+//                              onTap: () {
+//                                add;
+//                              },
+//                              child: Icon(
+//                                Icons.add,
+//                                color: Colors.white,
+//                              ),
+//                            ))),
+//                    Expanded(
+//                      flex: 3,
+//                      child: Text(
+//                        '$timer',
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                          fontFamily: 'Sukar',
+//                          fontSize: 20,
+//                          fontWeight: FontWeight.w200,
+//                          color: Colors.black,
+//                        ),
+//                      ),
+//                    ),
+//                    Expanded(
+//                        flex: 2,
+//                        child: Container(
+//                            decoration: BoxDecoration(
+//                                color: Color.fromRGBO(78, 161, 181, 1),
+//                                borderRadius: BorderRadius.only(
+//                                  bottomLeft: Radius.circular(20),
+//                                  topLeft: Radius.circular(20),
+//                                )),
+//                            alignment: Alignment.center,
+//                            child: GestureDetector(
+//                              child: Icon(
+//                                Icons.remove,
+//                                color: Colors.white,
+//                              ),
+//                            ))),
+//                  ],
+//                ),
+//              ),
+//              Padding(
+//                padding: const EdgeInsets.only(right: 5),
+//                child: Text(
+//                  'دقيقة',
+//                  style: TextStyle(
+//                    fontFamily: 'Sukar',
+//                    fontWeight: FontWeight.w200,
+//                    color: Colors.black,
+//                  ),
+//                ),
+//              )
+//            ],
+//          ),
+//        )
+//            : Expanded(
+//          flex: 3,
+//          child: Container(),
+//        ),
+//        Expanded(flex: 1, child: switchButtonSingle),
+//      ],
+//    );
+//  }
+//}
+
+
+
 class CustomSettingAlarm extends StatefulWidget {
   final String title;
   int timer;
@@ -119,9 +244,9 @@ class CustomSettingAlarm extends StatefulWidget {
 
   CustomSettingAlarm(
       {@required this.title,
-      this.timer,
-      this.timerRow,
-      this.switchButtonSingle});
+        this.timer,
+        this.timerRow,
+        this.switchButtonSingle});
 
   @override
   _CustomSettingAlarmState createState() => _CustomSettingAlarmState();
@@ -147,103 +272,105 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
         ),
         widget.timerRow == true
             ? Expanded(
-                flex: 3,
+          flex: 3,
+          child: Row(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    border: Border.all(
+                      color: Color.fromRGBO(78, 161, 181, 1),
+                    )),
+                width: MediaQuery.of(context).size.width * .3,
+                height: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: Border.all(
-                            color: Color.fromRGBO(78, 161, 181, 1),
-                          )),
-                      width: MediaQuery.of(context).size.width * .3,
-                      height: 30,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromRGBO(78, 161, 181, 1),
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(20),
-                                        topRight: Radius.circular(20),
-                                      )),
-                                  alignment: Alignment.center,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        widget.timer++;
-                                        print(widget.timer);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                    ),
-                                  ))),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              '${widget.timer}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Sukar',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w200,
-                                color: Colors.black,
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(78, 161, 181, 1),
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )),
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  widget.timer++;
+                                  print(widget.timer);
+                                });
+                              },
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
                               ),
-                            ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromRGBO(78, 161, 181, 1),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(20),
-                                        topLeft: Radius.circular(20),
-                                      )),
-                                  alignment: Alignment.center,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (widget.timer > 0) widget.timer--;
-                                        print(widget.timer);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.white,
-                                    ),
-                                  ))),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
+                            ))),
+                    Expanded(
+                      flex: 3,
                       child: Text(
-                        'دقيقة',
+                        '${widget.timer}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Sukar',
+                          fontSize: 20,
                           fontWeight: FontWeight.w200,
                           color: Colors.black,
                         ),
                       ),
-                    )
+                    ),
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(78, 161, 181, 1),
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
+                                )),
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (widget.timer > 0) widget.timer--;
+                                  print(widget.timer);
+                                });
+                              },
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                            ))),
                   ],
                 ),
-              )
-            : Expanded(
-                flex: 3,
-                child: Container(),
               ),
+              Padding(
+                padding: const EdgeInsets.only(right: 5),
+                child: Text(
+                  'دقيقة',
+                  style: TextStyle(
+                    fontFamily: 'Sukar',
+                    fontWeight: FontWeight.w200,
+                    color: Colors.black,
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+            : Expanded(
+          flex: 3,
+          child: Container(),
+        ),
         Expanded(flex: 1, child: widget.switchButtonSingle),
       ],
     );
   }
 }
+
+
 
 class CustomPrayerAlarm extends StatelessWidget {
   final bool singlePrayer;
@@ -251,17 +378,13 @@ class CustomPrayerAlarm extends StatelessWidget {
   final Switch switchButtonBefore;
   final Switch switchButtonAdhan;
   final Switch switchButtonAfter;
-  final int timerBefore;
-  final int timerAfter;
 
-  CustomPrayerAlarm({
+  const CustomPrayerAlarm({
     this.singlePrayer,
     this.title,
     this.switchButtonBefore,
     this.switchButtonAdhan,
     this.switchButtonAfter,
-    this.timerBefore,
-    this.timerAfter,
   });
 
   @override
@@ -289,18 +412,19 @@ class CustomPrayerAlarm extends StatelessWidget {
                         children: <Widget>[
                           CustomSettingAlarm(
                             title: 'تنبيه قبل الآذان',
-                            timer: timerBefore,
+                            timer: 25,
                             timerRow: true,
                             switchButtonSingle: switchButtonBefore,
                           ),
                           CustomSettingAlarm(
                             title: 'تنبيه بالآذان',
+                            timer: 25,
                             timerRow: false,
                             switchButtonSingle: switchButtonAdhan,
                           ),
                           CustomSettingAlarm(
                             title: 'تنبيه بالإقامة.',
-                            timer: timerAfter,
+                            timer: 25,
                             timerRow: true,
                             switchButtonSingle: switchButtonAfter,
                           ),
@@ -319,18 +443,19 @@ class CustomPrayerAlarm extends StatelessWidget {
             children: <Widget>[
               CustomSettingAlarm(
                 title: 'تنبيه قبل الآذان',
-                timer: timerAfter,
+                timer: 25,
                 timerRow: true,
                 switchButtonSingle: switchButtonBefore,
               ),
               CustomSettingAlarm(
                 title: 'تنبيه بالآذان',
+                timer: 25,
                 timerRow: false,
                 switchButtonSingle: switchButtonAdhan,
               ),
               CustomSettingAlarm(
                 title: 'تنبيه بالإقامة.',
-                timer: timerBefore,
+                timer: 25,
                 timerRow: true,
                 switchButtonSingle: switchButtonAfter,
               ),
