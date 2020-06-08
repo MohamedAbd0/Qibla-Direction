@@ -30,7 +30,6 @@ class _PrayerTimeState extends State<PrayerTime> {
   int hourNum;
   int minNum;
   int secNum;
-  final digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   _getCurrentLocation() {
     geolocator
@@ -46,25 +45,15 @@ class _PrayerTimeState extends State<PrayerTime> {
   }
 
   Future<void> _getTimes() async {
-
     try {
-      await Provider.of<PrayerTimes>(context, listen: false).getTimes(31.2444, 30.5497).then((_){
-
-
-      });
-
-
-    } on HttpException catch (error) {
-
-    } catch (v) {
+      await Provider.of<PrayerTimes>(context, listen: false)
+          .getTimes(31.2444, 30.5497)
+          .then((_) {});
+    } on HttpException catch (error) {} catch (v) {
       print('dsddsds');
       print(v.toString());
-
     }
-
   }
-
-
 
   _getAddressFromLatLng() async {
     print("dddddddddddddddddddddddddddddddddddd");
@@ -188,31 +177,28 @@ class _PrayerTimeState extends State<PrayerTime> {
   }
 
   timerValue() {
-      setState(() {
-        hourNum = mapNext[mapNext.keys.elementAt(0)]
-            .difference(DateTime.now())
-            .inHours;
-        minNum = (mapNext[mapNext.keys.elementAt(0)]
-            .difference(DateTime.now())
-            .inMinutes -
-            (mapNext[mapNext.keys.elementAt(0)]
-                .difference(DateTime.now())
-                .inHours *
-                60));
-        secNum = (mapNext[mapNext.keys.elementAt(0)]
-            .difference(DateTime.now())
-            .inSeconds -
-            (mapNext[mapNext.keys.elementAt(0)]
-                .difference(DateTime.now())
-                .inMinutes *
-                60));
-      });
-
+    setState(() {
+      hourNum =
+          mapNext[mapNext.keys.elementAt(0)].difference(DateTime.now()).inHours;
+      minNum = (mapNext[mapNext.keys.elementAt(0)]
+              .difference(DateTime.now())
+              .inMinutes -
+          (mapNext[mapNext.keys.elementAt(0)]
+                  .difference(DateTime.now())
+                  .inHours *
+              60));
+      secNum = (mapNext[mapNext.keys.elementAt(0)]
+              .difference(DateTime.now())
+              .inSeconds -
+          (mapNext[mapNext.keys.elementAt(0)]
+                  .difference(DateTime.now())
+                  .inMinutes *
+              60));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -228,7 +214,8 @@ class _PrayerTimeState extends State<PrayerTime> {
           centerTitle: true,
           actions: <Widget>[
             IconButton(
-               onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> PrayerTimeSetting())),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PrayerTimeSetting())),
               icon: Icon(
                 Icons.settings,
                 color: appColor,
@@ -240,7 +227,6 @@ class _PrayerTimeState extends State<PrayerTime> {
             ? Center(child: Text('Waiting...'))
             : Stack(
                 children: <Widget>[
-
                   Positioned(
                     bottom: 0,
                     child: Container(
@@ -312,45 +298,47 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
-
-
-
-                                             Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-
-
-                                                  FlipClock.countdown(
-                                                    duration: Duration(hours: 1,minutes: 1,seconds: 1),
-                                                    width: MediaQuery.of(context).size.width * .05,
-                                                    height: MediaQuery.of(context).size.height * .05,
-                                                    startTime: DateTime.now(),
-                                                    digitColor: Colors.white,
-                                                    backgroundColor: appColor,
-                                                    digitSize: 20,
-                                                    borderRadius: BorderRadius.circular(3),
-                                                    onDone: () => print('ih'),
-                                                  ),
-
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 20, left: 5),
-                                                    child: Text(
-                                                      "بعد",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily: 'Sukar',
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            FlipClock.countdown(
+                                              duration: Duration(
+                                                  hours: 1,
+                                                  minutes: 1,
+                                                  seconds: 1),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .05,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .05,
+                                              startTime: DateTime.now(),
+                                              digitColor: Colors.white,
+                                              backgroundColor: appColor,
+                                              digitSize: 20,
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                              onDone: () => print('ih'),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 20, left: 5),
+                                              child: Text(
+                                                "بعد",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: 'Sukar',
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
                                   );
@@ -385,12 +373,15 @@ class _PrayerTimeState extends State<PrayerTime> {
                                 style: TextStyle(
                                     fontFamily: 'Sukar',
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 16),
+                                    fontSize: 14),
                               ),
                               SizedBox(
                                 width: 5,
                               ),
-                              Image.asset("assets/pin_.png"),
+                              Icon(
+                                Icons.location_on,
+                                size: 14,
+                              )
                             ],
                           ),
                           SizedBox(
@@ -409,7 +400,8 @@ class _PrayerTimeState extends State<PrayerTime> {
                                     color: appColor,
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       IconButton(
                                         icon: Icon(
@@ -423,47 +415,46 @@ class _PrayerTimeState extends State<PrayerTime> {
                                           });
                                         },
                                       ),
-
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Center(
-                                              child: Container(
-                                                //margin: EdgeInsets.only(left: 20),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text(
-                                                      "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${DateFormat.yMMMd().format(time)}\n${DateFormat.EEEE().format(time)}",
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontFamily: 'Sukar',
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                          color: Colors.white),
-                                                    ),
-                                                    IconButton(
-                                                      icon: Icon(
-                                                        Icons.date_range,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )
-                                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Center(
+                                          child: Container(
+                                            //margin: EdgeInsets.only(left: 20),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text(
+                                                  "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${DateFormat.yMMMd().format(time)}\n${DateFormat.EEEE().format(time)}",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontFamily: 'Sukar',
+                                                      fontWeight:
+                                                          FontWeight.w200,
+                                                      color: Colors.white),
                                                 ),
-                                              ),
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.date_range,
+                                                    color: Colors.white,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
-                                           IconButton(
-                                            icon: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              print("object");
-                                              setState(() {
-                                                time = time.add(Duration(days: 1));
-                                              });
-                                            },
-                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          print("object");
+                                          setState(() {
+                                            time = time.add(Duration(days: 1));
+                                          });
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -476,7 +467,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                   //   _prayerModel.setFajr(dateTime);
+                                      //   _prayerModel.setFajr(dateTime);
 
                                       return itemTime("الفجر", dateTime);
                                     } else if (snapshot.hasError) {
@@ -493,7 +484,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                    //  _prayerModel.setSun(dateTime);
+                                      //  _prayerModel.setSun(dateTime);
 
                                       return itemTime("الشروق", dateTime);
                                     } else if (snapshot.hasError) {
@@ -510,7 +501,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                    //  _prayerModel.setDhor(dateTime);
+                                      //  _prayerModel.setDhor(dateTime);
 
                                       return itemTime("الظهر", dateTime);
                                     } else if (snapshot.hasError) {
@@ -527,7 +518,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                    //  _prayerModel.setDhor(dateTime);
+                                      //  _prayerModel.setDhor(dateTime);
                                       return itemTime("العصر", dateTime);
                                     } else if (snapshot.hasError) {
                                       return Text(snapshot.error.toString());
@@ -543,7 +534,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                     // _prayerModel.setMaghrib(dateTime);
+                                      // _prayerModel.setMaghrib(dateTime);
                                       return itemTime("المغرب", dateTime);
                                     } else if (snapshot.hasError) {
                                       return Text(snapshot.error.toString());
@@ -559,7 +550,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                                       AsyncSnapshot<DateTime> snapshot) {
                                     if (snapshot.hasData) {
                                       final dateTime = snapshot.data.toLocal();
-                                     // _prayerModel.setIsa(dateTime);
+                                      // _prayerModel.setIsa(dateTime);
 
                                       return itemTime("العشاء", dateTime);
                                     } else if (snapshot.hasError) {
@@ -655,8 +646,6 @@ class _PrayerTimeState extends State<PrayerTime> {
         DateTime.now(),
         CalculationMethod.EGYPTIAN);
 
-
-
     adhan.nextPrayer().then((prayer) {
       print("mapNext[prayer]");
 
@@ -671,7 +660,6 @@ class _PrayerTimeState extends State<PrayerTime> {
               mapNext[prayer] = p;
             });
             timerValue();
-
           });
         } else if (prayer == Prayer.SUNRISE) {
           adhan.sunrise.then((p) {
@@ -679,7 +667,6 @@ class _PrayerTimeState extends State<PrayerTime> {
               mapNext[prayer] = p;
             });
             timerValue();
-
           });
         } else if (prayer == Prayer.DHUHR) {
           adhan.dhuhr.then((p) {
@@ -687,7 +674,6 @@ class _PrayerTimeState extends State<PrayerTime> {
               mapNext[prayer] = p;
             });
             timerValue();
-
           });
         } else if (prayer == Prayer.ASR) {
           adhan.asr.then((p) {
@@ -695,7 +681,6 @@ class _PrayerTimeState extends State<PrayerTime> {
               mapNext[prayer] = p;
             });
             timerValue();
-
           });
         } else if (prayer == Prayer.MAGHRIB) {
           adhan.maghrib.then((p) {
@@ -711,13 +696,12 @@ class _PrayerTimeState extends State<PrayerTime> {
             });
             timerValue();
           });
-        }else if (prayer == Prayer.NONE) {
+        } else if (prayer == Prayer.NONE) {
           adhan.fajr.then((p) {
             setState(() {
               mapNext[prayer] = p;
             });
             timerValue();
-
           });
         }
       }

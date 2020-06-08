@@ -33,6 +33,7 @@ class _QiblahCompassState extends State<QiblahCompass>
 
   @override
   void initState() {
+    Timer.run(()=>_alert(context));
     controller = AnimationController(
       duration: Duration(milliseconds: 1000),
       vsync: this,
@@ -50,9 +51,9 @@ class _QiblahCompassState extends State<QiblahCompass>
 
   Future<void> _alert(BuildContext context) {
     return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+      context:  context,
+       builder: (context)  {
+         return AlertDialog(
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

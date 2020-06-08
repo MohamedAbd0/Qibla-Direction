@@ -106,6 +106,8 @@ class HttpHelper {
     var headers = {
       "content-type": "application/json",
       "accept": "application/json",
+      //"Host":"<calculated when request is sent>",
+      //"Content-Length":"<calculated when request is sent>"
 
     };
     if (token != null) headers["Authorization"] = "Bearer " + token;
