@@ -70,7 +70,6 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
         backgroundColor: Color.fromRGBO(251, 252, 252, 1),
       ),
       body: SingleChildScrollView(
-        controller: ScrollController(),
         padding: EdgeInsets.all(8),
         child: Column(
           children: <Widget>[
