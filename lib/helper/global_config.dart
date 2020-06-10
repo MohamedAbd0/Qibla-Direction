@@ -1,1 +1,1 @@
-final String apiUrl = 'https://cms.gdforce.com/';
+final String apiUrl = 'https://cms.gdforce.com';

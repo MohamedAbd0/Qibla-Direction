@@ -200,6 +200,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                 ],
               ),
             ),
+            SizedBox(height: 10,),
+
             showSinglePray
                 ? Column(
                   children: <Widget>[
@@ -305,42 +307,45 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                         activeColor: Color.fromRGBO(78, 161, 181, 1),
                       ),
                     ),
-                    CustomPrayerAlarm(
-                      title: "المغرب",
-                      singlePrayer: true,
+                    Container(
+                      child: CustomPrayerAlarm(
+                        title: "المغرب",
+                        singlePrayer: true,
 //                        timerAfter: timerMaghribAfter,
 //                        timerBefore: timerMaghribBefore,
-                      switchButtonBefore: Switch(
-                        value: isSwitchedMaghribBefore,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitchedMaghribBefore = value;
-                          });
-                        },
-                        activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                        activeColor: Color.fromRGBO(78, 161, 181, 1),
-                      ),
-                      switchButtonAdhan: Switch(
-                        value: isSwitchedMaghribAdhan,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitchedMaghribAdhan = value;
-                          });
-                        },
-                        activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                        activeColor: Color.fromRGBO(78, 161, 181, 1),
-                      ),
-                      switchButtonAfter: Switch(
-                        value: isSwitchedMaghribAfter,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitchedMaghribAfter = value;
-                          });
-                        },
-                        activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                        activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        switchButtonBefore: Switch(
+                          value: isSwitchedMaghribBefore,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribBefore = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedMaghribAdhan,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribAdhan = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedMaghribAfter,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribAfter = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
                       ),
                     ),
+
                     CustomPrayerAlarm(
                       title: "العشاء",
                       singlePrayer: true,

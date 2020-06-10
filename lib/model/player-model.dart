@@ -9,10 +9,11 @@ class PrayerModel {
   final String isha;
   final String imsak;
   final String midnight;
+  final String date;
 
 
   PrayerModel({
-    this.fajr, this.sunrise, this.dhuhr, this.asr, this.sunset, this.maghrib, this.isha, this.imsak, this.midnight
+    this.fajr, this.sunrise, this.dhuhr, this.asr, this.sunset, this.maghrib, this.isha, this.imsak, this.midnight,this.date
 });
 
 
@@ -21,6 +22,11 @@ class PrayerModel {
 
 PrayerModel _modelFromJson(Map<String, dynamic> json) {
 
+  String day = json["date"]["hijri"]["weekday"]["ar"];
+
+  String date_h = "${json["date"]["hijri"]["day"]} ${json["date"]["hijri"]["month"]["ar"]} ${json["date"]["hijri"]["year"]}";
+
+  String date_g ="${json["date"]["gregorian"]["day"]} مايو ${json["date"]["gregorian"]["year"]}";
 
   return PrayerModel(
     fajr: json["timings"]["Fajr"] as String,
@@ -32,6 +38,6 @@ PrayerModel _modelFromJson(Map<String, dynamic> json) {
     imsak: json["timings"]["Imsak"] as String,
     isha: json["timings"]["Isha"] as String,
     midnight: json["timings"]["Midnight"] as String,
-
+    date: day+" - "+ date_h+" - "+ date_g
   );
 }

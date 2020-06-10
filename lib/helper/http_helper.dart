@@ -3,6 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'global_config.dart';
+import 'dart:convert';
+import 'dart:io';
+
 
 class HttpHelper {
 
@@ -23,16 +26,36 @@ class HttpHelper {
     return dio;
   }
 
-  Future<Response> postJsonData(
+  Future<Map<String,dynamic>> postJsonData(
       {@required String url,
         @required Map<String, dynamic> data,
         String token}) async {
-    print(apiUrl+""+url);
-    var response = await _getDio()
-        .post(url, data: data, options: _getRequestOptions(token))
-        .catchError((e) => mapErrorResponse(e));
+    url = 'https://cms.gdforce.com'+url;
 
-    return response;
+    data["lang"]= "ar";
+    data["loginuid"]= "9458b0ad-80fb-4c0f-a515-58159c1f51fb";
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(data)));
+    HttpClientResponse response = await request.close();
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    Map<String, dynamic> map = json.decode(reply);
+    //    for (dynamic data in map['data']) {
+//      returnedMap.add({
+//        'name': data['name'] ?? 'noName',
+//        'image': data['logo']['url'] ?? 'noUrl',
+//        'id': data['id'].toString(),
+//      });
+//    }
+//    print(apiUrl+""+url);
+//    var response = await _getDio()
+//        .post(url,data: jsonEncode(data)   , options: _getRequestOptions(token))
+//        .catchError((e) => mapErrorResponse(e));
+//print(response);
+    return map ;
   }
 
   Future<Response> putJsonData(
@@ -105,12 +128,10 @@ class HttpHelper {
   Options _getRequestOptions(token) {
     var headers = {
       "content-type": "application/json",
-      "accept": "application/json",
-      //"Host":"<calculated when request is sent>",
-//      "Content-Length":"<calculated when request is sent>"
+      //  "accept": "application/json",
 
     };
-    if (token != null) headers["Authorization"] = "Bearer " + token;
+    //  if (token != null) headers["Authorization"] = "Bearer " + token;
     var options = Options(
       headers: headers,
       //connectTimeout: 90000,
@@ -140,7 +161,7 @@ class HttpHelper {
       else if (error.type != DioErrorType.CANCEL)
         throw HttpException(error.message);
     } else*/
-      throw HttpException(e.toString());
+    //  throw HttpException(e.toString());
   }
 
 }

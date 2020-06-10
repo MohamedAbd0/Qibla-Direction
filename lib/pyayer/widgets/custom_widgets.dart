@@ -402,97 +402,87 @@ class CustomPrayerAlarm extends StatefulWidget {
   _CustomPrayerAlarmState createState() => _CustomPrayerAlarmState();
 }
 
-bool _isExpanded;
+bool isExpand;
 
 class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
   @override
   void initState() {
     super.initState();
-    _isExpanded = false;
+    isExpand = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.singlePrayer
-        ? Column(
-            children: <Widget>[
-              Container(
+        ? Container(
+      
+      margin: EdgeInsets.only(bottom: 7),
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(10)),
+      child: ExpansionTile(
 
-                  alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: ExpansionPanelList(
+          onExpansionChanged: (val){
+            setState(() {
+              isExpand = val;
+            });
 
-                    expansionCallback: (int panelIndex, bool isExpanded) {
+          },
+          trailing: !isExpand ?Icon(
+            Icons.keyboard_arrow_down,
+            color: Color.fromRGBO(78, 161, 181, 1),
+          )
+              :Container(height: 0,width: 0,),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+              fontFamily: 'Sukar',
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(78, 161, 181, 1),
+            ),
+          ),
+          children:
+          <Widget>[
+            isExpand?
+            Card(
+              child: Column(
+                children: <Widget>[
+                  CustomSettingAlarm(
+                    title: 'تنبيه قبل الآذان',
+                    timer: 25,
+                    timerRow: true,
+                    switchButtonSingle: widget.switchButtonBefore,
+                  ),
+                  CustomSettingAlarm(
+                    title: 'تنبيه بالآذان',
+                    timer: 25,
+                    timerRow: false,
+                    switchButtonSingle: widget.switchButtonAdhan,
+                  ),
+                  CustomSettingAlarm(
+                    title: 'تنبيه بالإقامة.',
+                    timer: 25,
+                    timerRow: true,
+                    switchButtonSingle: widget.switchButtonAfter,
+                  ),
+                  isExpand ? IconButton(
+                    icon : Icon(Icons.keyboard_arrow_up ,
+                      color: Color.fromRGBO(78, 161, 181, 1),),
+                    onPressed: (){
                       setState(() {
-                        _isExpanded = !isExpanded;
+                        isExpand = false;
                       });
                     },
-                    children: <ExpansionPanel>[
-                      ExpansionPanel(
-                        headerBuilder: (context, bool isExpanded) => Padding(
-                          padding: const EdgeInsets.only(right:8.0),
-                          child: Container(
-                            color: Colors.grey,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  widget.title,
-                                  style: TextStyle(
-                                    fontFamily: 'Sukar',
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(78, 161, 181, 1),
-                                  ),
-                                ),
-                                !isExpanded ?Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Color.fromRGBO(78, 161, 181, 1),
-                                ):Container(width: 0 , height: 0,)
-                              ],
-                            ),
-                          ),
-                        ),
-                        body: Card(
-                          child: Column(children: <Widget>[
-                            CustomSettingAlarm(
-                              title: 'تنبيه قبل الآذان',
-                              timer: 25,
-                              timerRow: true,
-                              switchButtonSingle: widget.switchButtonBefore,
-                            ),
-                            CustomSettingAlarm(
-                              title: 'تنبيه بالآذان',
-                              timer: 25,
-                              timerRow: false,
-                              switchButtonSingle: widget.switchButtonAdhan,
-                            ),
-                            CustomSettingAlarm(
-                              title: 'تنبيه بالإقامة.',
-                              timer: 25,
-                              timerRow: true,
-                              switchButtonSingle: widget.switchButtonAfter,
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.keyboard_arrow_up,
-                                color: Color.fromRGBO(78, 161, 181, 1),
-                              ),
-                              onPressed: () {},
-                            )
-                          ]),
-                        ),
-                        canTapOnHeader: true,
-                        isExpanded: _isExpanded,
+                  ):Container(height: 0, width: 0,)
+                ],
+              ),
+            )
+                :Container(height: 0,width: 0,),
+          ]
 
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: 5,
-              )
-            ],
-          )
+      ),
+    )
         : Column(
             children: <Widget>[
               CustomSettingAlarm(

@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               );
 
             if (snapshot.data)
-              return QiblahCompass();
+              return PrayerTime();
 
             return null;
 
