@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_qiblah_example/helper/http_helper.dart';
+import 'package:flutter_qiblah_example/model/Location_Query_Auto_Complete.dart';
+import 'package:flutter_qiblah_example/model/location_methods_setting.dart';
 import 'package:flutter_qiblah_example/model/player-model.dart';
 
 
@@ -10,6 +12,9 @@ class PrayerTimes with ChangeNotifier {
   bool _waiting = true;
   final http = HttpHelper();
   PrayerModel prayerModel;
+
+  List<LocationAndMethods> locationMethodsList;
+  List<LocationQueryAutoComplete> locationQueryAutoCompleteList;
 
 
 

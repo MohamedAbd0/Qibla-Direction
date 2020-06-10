@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:adhan_flutter/adhan_flutter.dart';
+import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -303,26 +305,35 @@ class _PrayerTimeState extends State<PrayerTime> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.center,
                                     children: <Widget>[
-                                      FlipClock.countdown(
-                                        duration: Duration(
-                                            hours: 1,
-                                            minutes: 1,
-                                            seconds: 1),
-                                        width: MediaQuery.of(context)
-                                            .size
-                                            .width *
-                                            .05,
-                                        height: MediaQuery.of(context)
-                                            .size
-                                            .height *
-                                            .05,
-                                        startTime: DateTime.now(),
-                                        digitColor: Colors.white,
-                                        backgroundColor: appColor,
-                                        digitSize: 20,
-                                        borderRadius:
-                                        BorderRadius.circular(3),
-                                        onDone: () => print('ih'),
+                                      Countdown(
+                                        duration: Duration(hours: 1 , minutes: 5 , seconds: 5),
+                                        onFinish: () {
+                                          print('finished!');
+                                        },
+                                        builder: (BuildContext ctx, Duration remaining) {
+                                          return FlipClock.countdown(
+                                            duration: Duration(
+                                                hours: remaining.inHours,
+                                                minutes: remaining.inMinutes,
+                                                seconds: remaining.inSeconds),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width *
+                                                .05,
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height *
+                                                .05,
+                                            startTime: DateTime.now(),
+                                            digitColor: Colors.white,
+                                            backgroundColor: appColor,
+                                            digitSize: 20,
+                                            borderRadius:
+                                            BorderRadius.circular(3),
+                                            onDone: () => print('ih'),
+                                          );
+
+                                        },
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(
@@ -353,6 +364,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                     SizedBox(
                       height: 5,
                     ),
+                    Provider.of<PrayerTimes>(context, listen: false).prayer != null?
                     Text(
 
                       Provider.of<PrayerTimes>(context, listen: false).prayer.date,
@@ -363,7 +375,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                       ),
-                    ),
+                    ):SizedBox(),
                     SizedBox(
                       height: 5,
                     ),
