@@ -9,6 +9,9 @@ import 'package:flutter_qiblah_example/pyayer/Prayer_Time_Setting.dart';
 import 'package:flutter_qiblah_example/pyayer/prayer_time.dart';
 import 'package:flutter_qiblah_example/qiblah/loading_indicator.dart';
 import 'package:flutter_qiblah_example/qiblah/qiblah_compass.dart';
+import 'package:provider/provider.dart';
+
+import 'provider/prayer_times.dart';
 
 
 void main() => runApp(MyApp());
@@ -56,23 +59,45 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
 */
-      home: FutureBuilder(
-        future: _deviceSupport,
-        builder: (_, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return LoadingIndicator();
-          if (snapshot.hasError)
-            return Center(
-              child: Text("Error: ${snapshot.error.toString()}"),
-            );
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: PrayerTimes(),
+          ),
 
-          if (snapshot.data)
-            return Home();
 
-          return null;
 
-        },
-      )
+        ],
+        child: FutureBuilder(
+          future: _deviceSupport,
+          builder: (_, AsyncSnapshot<bool> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return LoadingIndicator();
+            if (snapshot.hasError)
+              return Center(
+                child: Text("Error: ${snapshot.error.toString()}"),
+              );
+
+            if (snapshot.data)
+              return PrayerTime();
+
+            return null;
+
+          },
+        )
+      ),
+
+
+
+
+
     );
   }
 }
+
+
+
+
+
+
+
