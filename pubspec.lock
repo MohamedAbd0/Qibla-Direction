@@ -123,6 +123,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2+1"
+  flutter_rounded_date_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_rounded_date_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -155,12 +162,19 @@ packages:
     source: hosted
     version: "2.0.4"
   hijri:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: hijri
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
+  hijri_picker:
+    dependency: "direct main"
+    description:
+      name: hijri_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   http:
     dependency: "direct main"
     description:

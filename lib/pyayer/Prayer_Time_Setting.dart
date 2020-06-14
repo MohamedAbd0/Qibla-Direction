@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah_example/pyayer/widgets/custom_widgets.dart';
@@ -8,6 +10,7 @@ class PrayerTimeSetting extends StatefulWidget {
 }
 
 class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
+
   String dropdownValue = 'One';
   bool showSinglePray = false;
   bool chosen1 = true;
@@ -37,6 +40,30 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
   bool isSwitchedIshaBefore = false;
   bool isSwitchedIshaAdhan = false;
   bool isSwitchedIshaAfter = false;
+
+  var scrollPosition;
+  ScrollController _scrollController ;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.run((){
+
+      scrollPosition = _scrollController.position;
+
+
+        _scrollController.animateTo(
+          scrollPosition.maxScrollExtent,
+          duration: new Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+        );
+
+    });
+
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +97,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
         backgroundColor: Color.fromRGBO(251, 252, 252, 1),
       ),
       body: SingleChildScrollView(
+        controller: scrollPosition,
         padding: EdgeInsets.all(8),
         child: Column(
           children: <Widget>[

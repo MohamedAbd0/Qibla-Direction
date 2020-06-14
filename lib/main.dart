@@ -39,8 +39,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
 
         theme: new ThemeData(
-          primaryColor: Colors.indigo,
-          accentColor: Colors.pinkAccent,
+          primaryColor: Color.fromRGBO(78, 161, 181, 1),
+          accentColor: Color.fromRGBO(78, 161, 181, 1),
           brightness: Brightness.light,
         ),
 

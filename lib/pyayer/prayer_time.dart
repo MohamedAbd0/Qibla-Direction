@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah_example/model/player-model.dart';
 import 'package:flutter_qiblah_example/provider/prayer_times.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:hijri_picker/hijri_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hijri/umm_alqura_calendar.dart';
@@ -33,16 +35,29 @@ class _PrayerTimeState extends State<PrayerTime> {
   int minNum;
   int secNum;
 
-
   @override
   void initState() {
     super.initState();
-    // Intl.defaultLocale = 'ar';
     time = DateTime.now();
-     _getCurrentLocation();
+    _getCurrentLocation();
   }
 
+  UmmAlquraCalendar selectedDate = UmmAlquraCalendar.now();
 
+  getPicker(BuildContext ctx) {
+    showRoundedDatePicker(
+      context: ctx,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 25),
+      lastDate: DateTime(DateTime.now().year + 200),
+      borderRadius: 16,
+      theme: ThemeData(
+        fontFamily: 'Sukar',
+        primaryColor: Color(0xFF4EA1B5),
+        accentColor:  Color(0xFF4EA1B5),
+      ),
+    );
+  }
   _getCurrentLocation() {
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
@@ -54,10 +69,7 @@ class _PrayerTimeState extends State<PrayerTime> {
     }).catchError((e) {
       print(e);
     });
-
-
   }
-
 
   _getAddressFromLatLng() async {
     print("dddddddddddddddddddddddddddddddddddd");
@@ -116,8 +128,6 @@ class _PrayerTimeState extends State<PrayerTime> {
     );
   }
 
-
-
   Widget itemTime(String name, TimeOfDay time) {
     return Container(
       padding: EdgeInsets.only(left: 20, right: 20),
@@ -133,7 +143,6 @@ class _PrayerTimeState extends State<PrayerTime> {
             textAlign: TextAlign.right,
             style: TextStyle(fontFamily: 'Sukar', fontWeight: FontWeight.w600),
           ),
-
         ],
       ),
     );
@@ -197,8 +206,7 @@ class _PrayerTimeState extends State<PrayerTime> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PrayerTimes>(context, listen: false)
-        .getTimes(31.2444, 30.5497);
+    Provider.of<PrayerTimes>(context, listen: false).getTimes(31.2444, 30.5497);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -227,304 +235,386 @@ class _PrayerTimeState extends State<PrayerTime> {
         body: _currentPosition == null
             ? Center(child: Text('Waiting...'))
             : Stack(
-          children: <Widget>[
-            Positioned(
-              bottom: 0,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Image.asset('assets/mosque.png',
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitHeight
-                  // height: 200,
-                  //  alignment: Alignment.center,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FutureBuilder(
-                        future: getNextPrayer(),
-                        builder:
-                            (context, AsyncSnapshot<Prayer> snapshot) {
-                          if (snapshot.hasData) {
-                            final prayer = snapshot.data;
-                            print("prayer.toString()");
-                            print(prayer.toString());
-
-                            return Text(
-                              prayer == Prayer.FAJR
-                                  ? "الفجر"
-                                  : prayer == Prayer.SUNRISE
-                                  ? "الشروق"
-                                  : prayer == Prayer.DHUHR
-                                  ? "الظهر"
-                                  : prayer == Prayer.ASR
-                                  ? "العصر"
-                                  : prayer == Prayer.MAGHRIB
-                                  ? "المغرب"
-                                  : prayer == Prayer.ISHA
-                                  ? "العشاء"
-                                  : 'الفجر',
-                              style: TextStyle(
-                                  fontFamily: 'Sukar',
-                                  fontWeight: FontWeight.w900,
-                                  color: Color.fromRGBO(159, 70, 51, 1),
-                                  fontSize: 25),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          } else {
-                            return Text('Waiting...');
-                          }
-                        },
-                      ),
+                children: <Widget>[
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset('assets/mosque.png',
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fitHeight
+                          // height: 200,
+                          //  alignment: Alignment.center,
+                          ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: FutureBuilder(
-                        future: getNextPrayer(),
-                        builder:
-                            (context, AsyncSnapshot<Prayer> snapshot) {
-                          if (snapshot.hasData) {
-                            final prayer = snapshot.data;
-
-                            return Container(
-                              margin: EdgeInsets.only(left: 35),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Countdown(
-                                        duration: Duration(hours: 1 , minutes: 5 , seconds: 5),
-                                        onFinish: () {
-                                          print('finished!');
-                                        },
-                                        builder: (BuildContext ctx, Duration remaining) {
-                                          return FlipClock.countdown(
-                                            duration: Duration(
-                                                hours: remaining.inHours,
-                                                minutes: remaining.inMinutes,
-                                                seconds: remaining.inSeconds),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width *
-                                                .05,
-                                            height: MediaQuery.of(context)
-                                                .size
-                                                .height *
-                                                .05,
-                                            startTime: DateTime.now(),
-                                            digitColor: Colors.white,
-                                            backgroundColor: appColor,
-                                            digitSize: 20,
-                                            borderRadius:
-                                            BorderRadius.circular(3),
-                                            onDone: () => print('ih'),
-                                          );
-
-                                        },
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            top: 20, left: 5),
-                                        child: Text(
-                                          "بعد",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: 'Sukar',
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          } else {
-                            return Text('Waiting...');
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Provider.of<PrayerTimes>(context, listen: false).prayer != null?
-                    Text(
-
-                      Provider.of<PrayerTimes>(context, listen: false).prayer.date,
-                     // " ${DateFormat.yMMMd().format(DateTime.now())} - ${UmmAlquraCalendar.fromDate(DateTime.now()).toFormat("MMMM dd, yyyy")} - ${DateFormat.EEEE().format(DateTime.now())}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Sukar',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ):SizedBox(),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          _currentAddress != null ? _currentAddress : "",
-                          style: TextStyle(
-                              fontFamily: 'Sukar',
-                              fontWeight: FontWeight.w200,
-                              fontSize: 14),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.location_on,
-                          size: 14,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Provider.of<PrayerTimes>(context, listen: false).prayer != null?
-                    Card(
-                      elevation: 0.5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Center(
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20)),
-                              color: appColor,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FutureBuilder(
+                              future: getNextPrayer(),
+                              builder:
+                                  (context, AsyncSnapshot<Prayer> snapshot) {
+                                if (snapshot.hasData) {
+                                  final prayer = snapshot.data;
+                                  print("prayer.toString()");
+                                  print(prayer.toString());
+
+                                  return Text(
+                                    prayer == Prayer.FAJR
+                                        ? "الفجر"
+                                        : prayer == Prayer.SUNRISE
+                                            ? "الشروق"
+                                            : prayer == Prayer.DHUHR
+                                                ? "الظهر"
+                                                : prayer == Prayer.ASR
+                                                    ? "العصر"
+                                                    : prayer == Prayer.MAGHRIB
+                                                        ? "المغرب"
+                                                        : prayer == Prayer.ISHA
+                                                            ? "العشاء"
+                                                            : 'الفجر',
+                                    style: TextStyle(
+                                        fontFamily: 'Sukar',
+                                        fontWeight: FontWeight.w900,
+                                        color: Color.fromRGBO(159, 70, 51, 1),
+                                        fontSize: 25),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text(snapshot.error.toString());
+                                } else {
+                                  return Text('Waiting...');
+                                }
+                              },
                             ),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      time = time
-                                          .subtract(Duration(days: 1));
-                                    });
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Center(
-                                    child: Container(
-                                      //margin: EdgeInsets.only(left: 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            "${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[1]} \n${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[2]} \n${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[0]}",
-                                           // "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${DateFormat.yMMMd().format(time)}\n${DateFormat.EEEE().format(time)}",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontFamily: 'Sukar',
-                                                fontWeight:
-                                                FontWeight.w200,
-                                                color: Colors.white),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.date_range,
-                                              color: Colors.white,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: FutureBuilder(
+                              future: getNextPrayer(),
+                              builder:
+                                  (context, AsyncSnapshot<Prayer> snapshot) {
+                                if (snapshot.hasData) {
+                                  final prayer = snapshot.data;
+
+                                  return Container(
+                                    margin: EdgeInsets.only(left: 35),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Countdown(
+                                              duration: Duration(
+                                                  hours: 1,
+                                                  minutes: 5,
+                                                  seconds: 5),
+                                              onFinish: () {
+                                                print('finished!');
+                                              },
+                                              builder: (BuildContext ctx,
+                                                  Duration remaining) {
+                                                return FlipClock.countdown(
+                                                  duration: Duration(
+                                                      hours: remaining.inHours,
+                                                      minutes:
+                                                          remaining.inMinutes,
+                                                      seconds:
+                                                          remaining.inSeconds),
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .05,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      .05,
+                                                  startTime: DateTime.now(),
+                                                  digitColor: Colors.white,
+                                                  backgroundColor: appColor,
+                                                  digitSize: 20,
+                                                  borderRadius:
+                                                      BorderRadius.circular(3),
+                                                  onDone: () => print('ih'),
+                                                );
+                                              },
                                             ),
-                                          )
-                                        ],
-                                      ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 20, left: 5),
+                                              child: Text(
+                                                "بعد",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: 'Sukar',
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    print("object");
-                                    setState(() {
-                                      time = time.add(Duration(days: 1));
-                                    });
-                                  },
-                                ),
-                              ],
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text(snapshot.error.toString());
+                                } else {
+                                  return Text('Waiting...');
+                                }
+                              },
                             ),
                           ),
                           SizedBox(
                             height: 5,
                           ),
+                          Provider.of<PrayerTimes>(context, listen: false)
+                                      .prayer !=
+                                  null
+                              ? Text(
+                                  Provider.of<PrayerTimes>(context,
+                                          listen: false)
+                                      .prayer
+                                      .date,
+                                  // " ${DateFormat.yMMMd().format(DateTime.now())} - ${UmmAlquraCalendar.fromDate(DateTime.now()).toFormat("MMMM dd, yyyy")} - ${DateFormat.EEEE().format(DateTime.now())}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Sukar',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              : SizedBox(),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                _currentAddress != null ? _currentAddress : "",
+                                style: TextStyle(
+                                    fontFamily: 'Sukar',
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                Icons.location_on,
+                                size: 14,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Provider.of<PrayerTimes>(context, listen: false)
+                                      .prayer !=
+                                  null
+                              ? Card(
+                                  elevation: 0.5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20)),
+                                          color: appColor,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.arrow_back_ios,
+                                                color: Colors.white,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  time = time.subtract(
+                                                      Duration(days: 1));
+                                                });
+                                              },
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Center(
+                                                child: Container(
+                                                  //margin: EdgeInsets.only(left: 20),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        "${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[1]} \n${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[2]} \n${Provider.of<PrayerTimes>(context, listen: false).prayer.date.split('-')[0]}",
+                                                        // "${UmmAlquraCalendar.fromDate(time).toFormat("MMMM dd, yyyy")}\n${DateFormat.yMMMd().format(time)}\n${DateFormat.EEEE().format(time)}",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontFamily: 'Sukar',
+                                                            fontWeight:
+                                                                FontWeight.w200,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      IconButton(
+                                                        onPressed:()=>
+                                                            getPicker(context),
+                                                        icon: Icon(
+                                                          Icons.date_range,
+                                                          color: Colors.white,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: Colors.white,
+                                              ),
+                                              onPressed: () {
+                                                print("object");
+                                                setState(() {
+                                                  time = time
+                                                      .add(Duration(days: 1));
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      itemTime(
+                                          "الفجر",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .fajr
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .fajr
+                                                      .split(':')[1]))),
+                                      itemDivider(),
+                                      itemTime(
+                                          "الشروق",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .sunrise
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .sunrise
+                                                      .split(':')[1]))),
+                                      itemDivider(),
+                                      itemTime(
+                                          "الظهر",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .dhuhr
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .dhuhr
+                                                      .split(':')[1]))),
+                                      itemDivider(),
+                                      itemTime(
+                                          "العصر",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .asr
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .asr
+                                                      .split(':')[1]))),
+                                      itemDivider(),
+                                      itemTime(
+                                          "المغرب",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .maghrib
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .maghrib
+                                                      .split(':')[1]))),
+                                      itemDivider(),
+                                      itemTime(
+                                          "العشاء",
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .isha
+                                                      .split(':')[0]),
+                                              minute: int.parse(
+                                                  Provider.of<PrayerTimes>(
+                                                          context,
+                                                          listen: false)
+                                                      .prayer
+                                                      .isha
+                                                      .split(':')[1]))),
 
-
-                          itemTime("الفجر",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.fajr.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.fajr.split(':')[1])
-                              )
-                          ),
-                          itemDivider(),
-                          itemTime("الشروق",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.sunrise.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.sunrise.split(':')[1])
-                              )
-                          ),
-                          itemDivider(),
-                          itemTime("الظهر",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.dhuhr.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.dhuhr.split(':')[1])
-                              )
-                          ),
-                          itemDivider(),
-                          itemTime("العصر",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.asr.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.asr.split(':')[1])
-                              )
-                          ),
-                          itemDivider(),
-                          itemTime("المغرب",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.maghrib.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.maghrib.split(':')[1])
-                              )
-                          ),
-                          itemDivider(),
-                          itemTime("العشاء",
-                              TimeOfDay(
-                                  hour: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.isha.split(':')[0]),
-                                  minute: int.parse(Provider.of<PrayerTimes>(context, listen: false).prayer.isha.split(':')[1])
-                              )
-                          ),
-
-
-
-                          /*
+                                      /*
                                   FutureBuilder(
                                     future: getTodayFajrTime(),
                                     builder: (context,
@@ -635,19 +725,21 @@ class _PrayerTimeState extends State<PrayerTime> {
                                   ),
 
                                   */
-                          SizedBox(
-                            height: 10,
-                          ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Center(
+                                  child: CircularProgressIndicator(),
+                                )
                         ],
                       ),
-                    ):
-                    Center(child: CircularProgressIndicator(),)
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
         floatingActionButton: FloatingActionButton(
             elevation: 0.5,
             backgroundColor: Colors.white,
