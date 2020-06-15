@@ -29,20 +29,20 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'القبلة',
 
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('ar' , 'SA'),
-        ],
-        debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ar' , 'SA'),
+      ],
+      debugShowCheckedModeBanner: false,
 
-        theme: new ThemeData(
-          primaryColor: Color.fromRGBO(78, 161, 181, 1),
-          accentColor: Color.fromRGBO(78, 161, 181, 1),
-          brightness: Brightness.light,
-        ),
+      theme: new ThemeData(
+        primaryColor: Color.fromRGBO(78, 161, 181, 1),
+        accentColor: Color.fromRGBO(78, 161, 181, 1),
+        brightness: Brightness.light,
+      ),
 
 /*
 
@@ -60,31 +60,31 @@ class _MyAppState extends State<MyApp> {
       ],
 */
       home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: PrayerTimes(),
-          ),
+          providers: [
+            ChangeNotifierProvider.value(
+              value: PrayerTimes(),
+            ),
 
 
 
-        ],
-        child: FutureBuilder(
-          future: _deviceSupport,
-          builder: (_, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return LoadingIndicator();
-            if (snapshot.hasError)
-              return Center(
-                child: Text("Error: ${snapshot.error.toString()}"),
-              );
+          ],
+          child: FutureBuilder(
+            future: _deviceSupport,
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting)
+                return LoadingIndicator();
+              if (snapshot.hasError)
+                return Center(
+                  child: Text("Error: ${snapshot.error.toString()}"),
+                );
 
-            if (snapshot.data)
-              return PrayerTime();
+              if (snapshot.data)
+                return PrayerTime();
 
-            return null;
+              return null;
 
-          },
-        )
+            },
+          )
       ),
 
 

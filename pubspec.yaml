@@ -16,6 +16,7 @@ dependencies:
   adhan_flutter: ^0.0.2
   intl: ^0.16.0
   flutter_rounded_date_picker: ^1.0.4
+  expansion_card: ^0.1.0
 
   location: ^2.5.3
   expansion_tile_card: ^1.0.3

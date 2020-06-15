@@ -136,13 +136,13 @@ class _QiblahCompassState extends State<QiblahCompass>
           ),
           backgroundColor: Color.fromRGBO(251, 252, 252, 1),
           centerTitle: true,
-          leading: IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Color.fromRGBO(78, 161, 181, 1),
-              ),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PrayerTime()))),
+//          leading: IconButton(
+//              icon: Icon(
+//                Icons.settings,
+//                color: Color.fromRGBO(78, 161, 181, 1),
+//              ),
+//              onPressed: () => Navigator.push(context,
+//                  MaterialPageRoute(builder: (context) => PrayerTime()))),
           actions: <Widget>[
             IconButton(
                 icon: Image.asset('assets/compassIcon.png'),
