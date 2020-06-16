@@ -1,7 +1,7 @@
 class LocationAndMethods {
 
 
-  final String id ;
+  final int id ;
 
   final String name;
 
@@ -14,7 +14,7 @@ LocationAndMethods _locationAndMethodsFromMap(Map<String, dynamic> json) {
 
 
   return LocationAndMethods(
-id: json ["data"]["id"] as String,
-    name: json ["data"]["name"] as String,
+id: json ["id"] as int,
+    name: json ["name"] as String,
   );
 }

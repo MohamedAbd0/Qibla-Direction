@@ -13,7 +13,7 @@ class PrayerTimes with ChangeNotifier {
   final http = HttpHelper();
   PrayerModel prayerModel;
 
-  List<LocationAndMethods> locationMethodsList;
+  List<LocationAndMethods> locationMethodsList = List<LocationAndMethods>();
   List<LocationQueryAutoComplete> locationQueryAutoCompleteList;
 
 
@@ -28,6 +28,10 @@ class PrayerTimes with ChangeNotifier {
 
   PrayerModel get prayer{
     return prayerModel;
+  }
+
+  List<LocationAndMethods> get locationMethods{
+    return locationMethodsList;
   }
 
 
@@ -57,6 +61,42 @@ class PrayerTimes with ChangeNotifier {
       _waiting = false;
       notifyListeners();
 
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+//------------------------- method time -----------------
+  Future<void> getMethod() async {
+    try {
+      if(locationMethods.length ==0){
+        var response = await http.postJsonData(
+            url: '/api3/get/prayer_method_type/',
+            data: {
+              "lang": "ar",
+              "loginuid": "9458b0ad-80fb-4c0f-a515-58159c1f51fb"
+            },
+            token: null
+        );
+        print("-----------------------------------");
+        print(response['data']);
+
+        List<dynamic> lstMethods = response['data'];
+
+        lstMethods.forEach((item){
+          locationMethodsList.add(LocationAndMethods.fromJson(item));
+        });
+        print("-------------- locationMethodsList.length ----------------");
+        print("-------------- ${locationMethodsList.length}----------------");
+
+        print("-----------------------------------");
+
+        // prayerModel = PrayerModel.fromJson(response);
+        // _waiting = false;
+        notifyListeners();
+
+      }
     } catch (error) {
       throw error;
     }
