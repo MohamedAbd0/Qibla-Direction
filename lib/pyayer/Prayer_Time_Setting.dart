@@ -14,7 +14,7 @@ class PrayerTimeSetting extends StatefulWidget {
 }
 
 class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
-  LocationAndMethods dropdownValueOfMethod;
+  String dropdownValueOfMethod;
   String dropdownValue2;
   String dropdownValueSound;
 
@@ -64,7 +64,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
       );
     });
 */
-   // dropdownValueOfMethod = "رابطة العالم الاسلامى";
+    dropdownValueOfMethod = "رابطة العالم الاسلامى";
    // dropdownValue2 = 'اختر المذهب';
     //dropdownValueSound = 'اختر المؤذن';
   }
@@ -138,8 +138,9 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       border: Border.all(color: Colors.grey)),
                   child: DropdownButton<LocationAndMethods>(
                     icon: Icon(Icons.keyboard_arrow_down,color: Color.fromRGBO(78, 161, 181, 1),size: 20,),
+
                     hint: Text(
-                      dropdownValueOfMethod.name,
+                      dropdownValueOfMethod,
                       style: TextStyle(
                         fontFamily: 'Sukar',
                         fontSize: 14,
@@ -148,14 +149,13 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       ),
                     ),
 
-
 //
                     underline: Container(
                       color: Colors.white,
                     ),
                     onChanged: (LocationAndMethods newValue) {
                       setState(() {
-                        dropdownValueOfMethod = newValue;
+                        dropdownValueOfMethod = newValue.name;
                       });
                     },
                     items:  Provider.of<PrayerTimes>(context, listen: false).locationMethods
