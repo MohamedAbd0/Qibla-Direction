@@ -9,6 +9,8 @@ import 'package:flutter_qiblah_example/qiblah/qiblah_compass.dart';
 import 'package:provider/provider.dart';
 
 class PrayerTimeSetting extends StatefulWidget {
+  static String id = 'prayerTimeSetting';
+
   @override
   _PrayerTimeSettingState createState() => _PrayerTimeSettingState();
 }
@@ -64,7 +66,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
       );
     });
 */
-    dropdownValueOfMethod = "رابطة العالم الاسلامى";
+//    dropdownValueOfMethod = "رابطة العالم الاسلامى";
    // dropdownValue2 = 'اختر المذهب';
     //dropdownValueSound = 'اختر المؤذن';
   }
@@ -74,7 +76,9 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
     Provider.of<PrayerTimes>(context, listen: false).getMethod();
 
     return Scaffold(
-      appBar: AppBar(
+        backgroundColor: Color(0xffFFFFFF),
+
+        appBar: AppBar(
         elevation: .5,
         leading: IconButton(
           icon: Icon(
@@ -96,12 +100,12 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
           'الاعدادات',
           style: TextStyle(
             fontFamily: 'Sukar',
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            color: Color.fromRGBO(78, 161, 181, 1),
+            fontSize: 23,
+            fontWeight: FontWeight.w900,
+            color: Color(0xff4EA1B5),
           ),
         ),
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Color(0xffFBFCFC),
       ),
       body:
       Provider.of<PrayerTimes>(context, listen: true).locationMethods.length >0 ?
@@ -110,6 +114,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
         padding: EdgeInsets.only(top: 8, right: 8, left: 8),
         child: Column(
           children: <Widget>[
+
+            // Choose Country
             CustomTextField(
               hint: "اختر المدينة",
               title: "المدينة",
@@ -117,6 +123,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
               icon: Icons.place,
             ),
 
+            // Methods Calculate
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -124,8 +131,10 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   'طريقة الحساب',
                   textAlign: TextAlign.right,
                   style: TextStyle(
+                    color: Color(0xff191818),
+                    fontSize: 14,
                     fontFamily: 'Sukar',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 5,),
@@ -135,17 +144,17 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   width: MediaQuery.of(context).size.width * .91,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey)),
+                      border: Border.all(color: Color(0xff707070))),
                   child: DropdownButton<LocationAndMethods>(
                     icon: Icon(Icons.keyboard_arrow_down,color: Color.fromRGBO(78, 161, 181, 1),size: 20,),
 
                     hint: Text(
-                      dropdownValueOfMethod,
+                      "رابطة العالم الاسلامى",
                       style: TextStyle(
                         fontFamily: 'Sukar',
                         fontSize: 14,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w200,
+                        color: Color(0xffBFBFBF),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
 
@@ -168,7 +177,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                               value.name,
                               style: TextStyle(
                                 fontFamily: 'Sukar',
-                                fontWeight: FontWeight.w200,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xff191818),
                               ),
                             )),
                       );
@@ -180,6 +190,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                 ),
               ],
             ),
+
+// Elmathhab
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -188,7 +200,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                       fontFamily: 'Sukar',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff191818),
                       fontSize: 14),
                 ),
                 SizedBox(height: 5,),
@@ -198,15 +211,16 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   width: MediaQuery.of(context).size.width * .91,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey)),
+                      border: Border.all(color: Color(0xff707070))),
                   child: DropdownButton<String>(
                     icon: Icon(Icons.keyboard_arrow_down,color: Color.fromRGBO(78, 161, 181, 1),size: 20,),
                     hint: Text(
                       "إختار المذهب",
                       style: TextStyle(
                           fontFamily: 'Sukar',
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w200,
+                          color: Color(0xffbfbfbf),
+                          fontWeight: FontWeight.bold,
+                        fontSize: 14
                           ),
                     ),
                     value: dropdownValue2,
@@ -240,6 +254,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                 )
               ],
             ),
+
+            // Mothen Voice
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -248,7 +264,9 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'Sukar',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xff191818)
                   ),
                 ),
                 SizedBox(height: 5,),
@@ -258,15 +276,15 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                   width: MediaQuery.of(context).size.width * .91,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey)),
+                      border: Border.all(color: Color(0xff707070))),
                   child: DropdownButton<String>(
                     icon: Icon(Icons.keyboard_arrow_down,color: Color.fromRGBO(78, 161, 181, 1),size: 20,),
                     hint: Text(
                       "إختار صوت المؤذن",
                       style: TextStyle(
                           fontFamily: 'Sukar',
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w200,
+                          color: Color(0xffbfbfbf)          ,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
                     value: dropdownValueSound,
@@ -296,6 +314,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                 )
               ],
             ),
+
+// Background Word
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Row(
@@ -306,7 +326,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                     style: TextStyle(
                       fontFamily: 'Sukar',
                       fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xff191818)
                     ),
                   ),
                   Switch(
@@ -325,6 +346,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
             SizedBox(
               height: 7,
             ),
+
+            // Attention Word
             Row(
               children: <Widget>[
                 Padding(
@@ -333,8 +356,9 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                     'التنبيهات',
                     style: TextStyle(
                       fontFamily: 'Sukar',
-                      // fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                       fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff191818)
                     ),
                   ),
                 ),
@@ -343,6 +367,8 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
             SizedBox(
               height: 8,
             ),
+
+// Buttons
             Container(
               width: MediaQuery.of(context).size.width * .95,
               child: Row(
@@ -379,8 +405,10 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
               height: 10,
             ),
             showSinglePray
+            // Setting For Each prayer
                 ? Column(
                     children: <Widget>[
+                      // Fajr
                       CustomPrayerAlarm(
                         title: "الفجر",
                         singlePrayer: true,
@@ -415,6 +443,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                           activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
+                      //Dhohr
                       CustomPrayerAlarm(
                         title: "الظهر",
                         singlePrayer: true,
@@ -449,6 +478,7 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                           activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
+                     //Asr
                       CustomPrayerAlarm(
                         title: "العصر",
                         singlePrayer: true,
@@ -483,44 +513,44 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                           activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
-                      Container(
-                        child: CustomPrayerAlarm(
-                          title: "المغرب",
-                          singlePrayer: true,
+                      //Maghrib
+                      CustomPrayerAlarm(
+                        title: "المغرب",
+                        singlePrayer: true,
 //                        timerAfter: timerMaghribAfter,
 //                        timerBefore: timerMaghribBefore,
-                          switchButtonBefore: Switch(
-                            value: isSwitchedMaghribBefore,
-                            onChanged: (value) {
-                              setState(() {
-                                isSwitchedMaghribBefore = value;
-                              });
-                            },
-                            activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                            activeColor: Color.fromRGBO(78, 161, 181, 1),
-                          ),
-                          switchButtonAdhan: Switch(
-                            value: isSwitchedMaghribAdhan,
-                            onChanged: (value) {
-                              setState(() {
-                                isSwitchedMaghribAdhan = value;
-                              });
-                            },
-                            activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                            activeColor: Color.fromRGBO(78, 161, 181, 1),
-                          ),
-                          switchButtonAfter: Switch(
-                            value: isSwitchedMaghribAfter,
-                            onChanged: (value) {
-                              setState(() {
-                                isSwitchedMaghribAfter = value;
-                              });
-                            },
-                            activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
-                            activeColor: Color.fromRGBO(78, 161, 181, 1),
-                          ),
+                        switchButtonBefore: Switch(
+                          value: isSwitchedMaghribBefore,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribBefore = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
+                        switchButtonAdhan: Switch(
+                          value: isSwitchedMaghribAdhan,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribAdhan = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
+                        ),
+                        switchButtonAfter: Switch(
+                          value: isSwitchedMaghribAfter,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitchedMaghribAfter = value;
+                            });
+                          },
+                          activeTrackColor: Color.fromRGBO(78, 161, 181, 1),
+                          activeColor: Color.fromRGBO(78, 161, 181, 1),
                         ),
                       ),
+                      //Isha
                       CustomPrayerAlarm(
                         title: "العشاء",
                         singlePrayer: true,
@@ -559,10 +589,10 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       ),
                     ],
                   )
+
+            // Setting for All Prayers
                 : CustomPrayerAlarm(
                     singlePrayer: false,
-//                    timerAfter: timerAfter,
-//                    timerBefore: timerBefore,
                     switchButtonBefore: Switch(
                       value: isSwitchedAllBefore,
                       onChanged: (value) {
@@ -594,21 +624,24 @@ class _PrayerTimeSettingState extends State<PrayerTimeSetting> {
                       activeColor: Color.fromRGBO(78, 161, 181, 1),
                     ),
                   ),
-            Padding(
-              padding: const EdgeInsets.only(top: 25.0),
-              child: RaisedButton(
-                elevation: 0,
-                shape: StadiumBorder(
-                    side: BorderSide(color: Color.fromRGBO(78, 161, 181, 1))),
-                color: Colors.white,
-                onPressed: () {},
-                child: Text(
-                  'تم',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Sukar',
-                    fontWeight: FontWeight.w200,
-                    color: Color.fromRGBO(78, 161, 181, 1),
+            Container(
+              width: 120,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 25.0),
+                child: RaisedButton(
+                  elevation: 0,
+                  shape: StadiumBorder(
+                      side: BorderSide(color: Color.fromRGBO(78, 161, 181, 1))),
+                  color: Colors.white,
+                  onPressed: () {},
+                  child: Text(
+                    'تم',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Sukar',
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff4EA1B5),
+                    ),
                   ),
                 ),
               ),

@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   final Widget prefixWidget;
   final bool readOnly;
 
+
   CustomTextField(
       {@required this.hint,
       this.icon,
@@ -43,8 +44,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: Text(
                 widget.title,
                 style: TextStyle(
+                  color: Color(0xff37352F),
                   fontFamily: 'Sukar',
-                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -67,13 +70,14 @@ setState(() {
                     children: <Widget>[
                       Icon(
                         widget.icon,
-                        size: 18,
+                        size: 12,
                       ),
                       SizedBox(width: 3,),
-                      Text(widget.hint , style:
-                      TextStyle(
+                      Text(widget.hint ,
+                        style:TextStyle(
                       fontFamily: 'Sukar',
-                      fontWeight: FontWeight.w200,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffbfbfbf),
                       fontSize: 14)
                         ,)
                     ],
@@ -85,13 +89,13 @@ setState(() {
 //                      fontSize: 14),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.black54)),
+                      borderSide: BorderSide(color: Color(0xff707070))),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.black54)),
+                      borderSide: BorderSide(color: Color(0xff707070))),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.black54)),
+                      borderSide: BorderSide(color: Color(0xff707070))),
                 ),
               ),
             )
@@ -118,7 +122,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5),
-      width: MediaQuery.of(context).size.width * .45,
+      width: MediaQuery.of(context).size.width * .38,
       decoration: BoxDecoration(
         color: chosenButton ? Color.fromRGBO(78, 161, 181, 1) : Colors.white,
         borderRadius: right
@@ -136,11 +140,11 @@ class CustomButton extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontFamily: 'Sukar',
-              fontWeight: FontWeight.w100,
+              fontWeight: FontWeight.normal,
               color:
-                  chosenButton ? Colors.white : Color.fromRGBO(78, 161, 181, 1),
+                  chosenButton ? Colors.white : Color(0xff4EA1B5),
             ),
           )),
     );
@@ -177,9 +181,9 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
               widget.title,
               style: TextStyle(
                 fontFamily: 'Sukar',
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: Color(0xff191818),
               ),
             ),
           ),
@@ -195,10 +199,11 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
                               color: Color.fromRGBO(78, 161, 181, 1),
                             )),
                         width: MediaQuery.of(context).size.width * .27,
-                        height: 33,
+                        height: 34,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            // add button
                             Expanded(
                                 flex: 2,
                                 child: GestureDetector(
@@ -219,9 +224,10 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
                                       child: Icon(
                                         Icons.add,
                                         color: Colors.white,
-                                        size: 15,
+                                        size: 12,
                                       )),
                                 )),
+                            // Time text
                             Expanded(
                               flex: 3,
                               child: Container(
@@ -231,14 +237,16 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: 'Sukar',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xff191818),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
+
+                            //minus button
                             Expanded(
                                 flex: 2,
                                 child: GestureDetector(
@@ -259,21 +267,23 @@ class _CustomSettingAlarmState extends State<CustomSettingAlarm> {
                                       child: Icon(
                                         Icons.remove,
                                         color: Colors.white,
-                                        size: 15,
+                                        size: 12,
                                       )),
                                 )),
                           ],
                         ),
                       ),
+
+                      // Minute word
                       Padding(
                         padding: const EdgeInsets.only(right: 15, top: 11),
                         child: Text(
                           'دقيقة',
                           style: TextStyle(
                             fontFamily: 'Sukar',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff707070),
                           ),
                         ),
                       )
@@ -328,8 +338,8 @@ class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
                 margin: EdgeInsets.only(bottom: 1),
                 alignment: Alignment.bottomCenter,
                 decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(15)),
+                    color: Color(0xfff3f3f3),
+                    borderRadius: BorderRadius.circular(10)),
                 child: ExpansionCard(
                     margin: EdgeInsets.symmetric(vertical: 1),
                     onExpansionChanged: (val) {
@@ -342,14 +352,16 @@ class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
                       widget.title,
                       style: TextStyle(
                         fontFamily: 'Sukar',
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(78, 161, 181, 1),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff4EA1B5),
                       ),
                     ),
                     trailing: !isExpand
                         ? Icon(
                             Icons.keyboard_arrow_down,
-                            color: Color.fromRGBO(78, 161, 181, 1),
+                      color: Color(0xff4EA1B5),
+
                           )
                         : Container(
                             height: 0,
@@ -362,7 +374,8 @@ class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(15),
                                       bottomRight: Radius.circular(15))),
-                              elevation: 0,
+                              elevation: 2,
+
                               child: Column(
                                 children: <Widget>[
                                   CustomSettingAlarm(
@@ -391,7 +404,7 @@ class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
                                           icon: Icon(
                                             Icons.keyboard_arrow_up,
                                             color:
-                                                Color.fromRGBO(78, 161, 181, 1),
+                                                Color(0xff4ea1b5),
                                           ),
                                           onPressed: () {
                                             setState(() {
@@ -413,7 +426,7 @@ class _CustomPrayerAlarmState extends State<CustomPrayerAlarm> {
                     ]),
               ),
               SizedBox(
-                height: 2,
+                height: 1,
               )
             ],
           )
